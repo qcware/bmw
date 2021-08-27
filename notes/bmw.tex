@@ -1,0 +1,124 @@
+\date{\today}
+
+%\documentclass[journal=jacsat,manuscript=communication,layout=twocolumn]{achemso}
+%\documentclass[jctcce,letterpaper,twocolumn,floatfix,preprintnumbers,superscriptaddress]{revtex4}
+% \documentclass[12pt,preprint,aps,prb]{revtex4}
+% \documentclass[aps,preprint,showpacs,superscriptaddress,groupedaddress]{revtex4}  % for double-spaced preprint
+\documentclass[aps,prl,twocolumn,superscriptaddress,groupedaddress]{revtex4}  % for review and submission
+\usepackage{dcolumn,graphicx,amsmath,amssymb,algorithm,algpseudocode}
+\usepackage{todonotes}
+\usepackage{qcircuit}
+
+\newcommand{\total}{\mathrm{d}}
+\newcommand{\ud}{\mathrm{d}}
+\newcommand{\erf}{\mathrm{erf}}
+\newcommand{\erfc}{\mathrm{erfc}}
+\newcommand{\diff}[2]{\frac{\ud {#1}}{\ud {#2}}}
+\newcommand{\pdiff}[2]{\frac{\partial #1}{\partial #2}}
+
+\begin{document}
+
+\definecolor{brickred}{rgb}{.72,0,0} 
+
+\title{
+BMW Quantum Challenge: Optimizing the Production of Test Vehicles
+}
+
+\author{Robert M. Parrish}
+\email{rob.parrish@qcware.com}
+\affiliation{
+QC Ware Corporation, Palo Alto, CA 94301, USA \\
+\textbf{QC Ware Corporation Proprietary and Confidential}
+}
+
+
+\begin{abstract} 
+Notes of the formulation and implementation of BMW test vehicle production
+optimization problem.
+\end{abstract}
+
+\maketitle
+
+\section{Formulation}
+
+
+\subsection{Notes on Problem Input Refinement}
+
+\subsubsection{Group Feature Collision}
+
+Their consultant is just trying to be an asshole:
+
+Group 40 (28 elements): \texttt{[245, 246, 247, 250, 251, 252, 253, 254, 255,
+256, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280,
+281, 282, 284]}
+
+Group 41 (46 elements): \texttt{[245, 246, 247, 248, 249, 250, 251, 252, 253,
+254, 255, 256, 257, 258, 259, 260, 261, 262, 263, 264, 267, 268, 269, 270, 271,
+272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 285, 286, 287, 288,
+289, 290, 291, 292, 293]}
+
+Union (48 elements): \texttt{[245, 246, 247, 248, 249, 250, 251, 252, 253, 254,
+255, 256, 257, 258, 259, 260, 261, 262, 263, 264, 266, 267, 268, 269, 270, 271,
+272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287,
+288, 289, 290, 291, 292, 293]}
+
+Intersection (26 elements): \texttt{[245, 246, 247, 250, 251, 252, 253, 254,
+255, 256, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280,
+281, 282]}
+
+In Group 40 but not Group 41 (2 elements): \texttt{[266, 284]}
+
+In Group 41 but not Group 40 (20 elements): \texttt{[248, 249, 257, 258, 259,
+260, 261, 262, 263, 264, 283, 285, 286, 287, 288, 289, 290, 291, 292, 293]}
+
+This is hugely vexing for efficient enumeration of group-feature-satisfying
+vehicle candidates.
+
+This can be overcome by (1) redefining Group 40 to be \texttt{[266, 284]} and
+then (2) adding a new global (added for all types) rule to the build rules:
+
+\texttt{ F266 | F284 => !F245 \& !F246 \& !F247 \& !F250 \& !F251 \& !F252 \& !F253 \&
+!F254 \& !F255 \& !F256 \& !F267 \& !F268 \& !F269 \& !F270 \& !F271 \& !F272 \& !F273 \&
+!F274 \& !F275 \& !F276 \& !F277 \& !F278 \& !F279 \& !F280 \& !F281 \& !F282}
+
+If the group features are chosen randomly, uniformly, and independently, this
+rule has a probability of $2/(1+2)$ to be activated (if 266 xor 284 are true).
+The probability of the rule being violated is $\sim 26/(1+46) \sim 0.55$.
+Therefore the joint probability of the rule being activated and failing is
+$(2/3) * (26/47) \sim 0.37$. Note that this high success probability is somewhat
+accidental, and is only due to the fact that the in-40-but-not-in-41 subset is
+small relative to the intersection \emph{and} the in-41-but-not-in-40 subset is
+large relative to the the intersection. In future, it is recommended that
+collisions between feature groups be avoided at all costs in the formulation of
+this problem, insofar as is possible.
+
+\subsection{Notes on Problem Input Specialization}
+
+\subsubsection{Notes on Problem Rules}
+
+We consider certain classes of rules observed in the pilot problem inputs to be
+universal, and denote such choices here:
+
+\begin{enumerate}
+\item Type allowed feature indices are nondegenerate and sorted during parsing
+to be stored in ascending order.
+\item Group feature indices are nondegenerate and sorted during parsing to be stored
+in ascending order. 
+\item The union of Group feature indices is nondegenerate after refinement.
+\item Not all Types have all Groups active.
+\item Not all Type features are contained in a Group.
+\item Not all Group features are valid for an intersecting Type.
+\end{enumerate}
+
+\subsubsection{Notes on Problem Sizes}
+
+\begin{enumerate}
+\item The number of Types $n_{T}$ is 25.
+\item The number of Features $n_{F}$ is 469. 
+\end{enumerate}
+
+
+% \bibliography{jrncodes.bib,refs.bib}
+% \bibliographystyle{aip}
+
+\end{document}
