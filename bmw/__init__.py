@@ -6,3 +6,5 @@ from .test_car_problem import TestCarProblem
 from .test_car_problem import TestCarProblemTranslater
 
 from .type_specification import TypeSpecification
+
+from .random_state_generator import RandomStateGenerator

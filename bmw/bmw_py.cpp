@@ -2,6 +2,7 @@
 #include "simple_binary_implication.hpp"
 #include "simple_binary_expression.hpp"
 #include "first_order_all_binary_expression.hpp"
+#include "random_state_generator.hpp"
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
@@ -55,6 +56,13 @@ py::class_<TypeSpecification>(m, "TypeSpecification")
 .def_property("groups", &TypeSpecification::groups, nullptr)
 .def_property("rules", &TypeSpecification::rules, nullptr)
 .def_property("active_features", &TypeSpecification::active_features, nullptr)
+;
+
+py::class_<RandomStateGenerator>(m, "RandomStateGenerator")
+.def(py::init<size_t>(), "seed"_a=0)
+.def_property("seed", &RandomStateGenerator::seed, nullptr)
+.def_property("random_engine", &RandomStateGenerator::random_engine, nullptr)
+.def("generate_random", &RandomStateGenerator::generate_random, "type"_a)
 ;
 
 }

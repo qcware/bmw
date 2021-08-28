@@ -39,6 +39,11 @@ for index in range(len(problem.test_weights)):
         ))
 print(len(problem.test_weights))
 
+generator = bmw.RandomStateGenerator(seed=0)
+
+state = generator.generate_random(type=problem2[0])
+print(state)
+
 # type_rule = problem2[5]
 # 
 # state = bmw.GeneratorUtility.propose_random(type_rule=type_rule)
