@@ -1,7 +1,8 @@
-#include "type_specification.hpp"
-#include "simple_binary_implication.hpp"
 #include "simple_binary_expression.hpp"
+#include "simple_binary_implication.hpp"
 #include "first_order_all_binary_expression.hpp"
+#include "type_specification.hpp"
+#include "test_set.hpp"
 #include "random_state_generator.hpp"
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -56,13 +57,32 @@ py::class_<TypeSpecification>(m, "TypeSpecification")
 .def_property("groups", &TypeSpecification::groups, nullptr)
 .def_property("rules", &TypeSpecification::rules, nullptr)
 .def_property("active_features", &TypeSpecification::active_features, nullptr)
+.def("check_nfeature", &TypeSpecification::check_nfeature, "state"_a)
+.def("check_groups", &TypeSpecification::check_groups, "state"_a)
+.def("check_rules", &TypeSpecification::check_rules, "state"_a)
+.def("check_valid", &TypeSpecification::check_valid, "state"_a)
+;
+
+py::class_<TestSet>(m, "TestSet")
+.def(py::init<
+    const std::vector<double>&,
+    const std::vector<uint32_t>&,
+    const std::vector<FirstOrderAllBinaryExpression>&>(),
+    "weights"_a, "counts"_a, "expressions"_a)
+.def_property("weights", &TestSet::weights, nullptr)
+.def_property("counts", &TestSet::counts, nullptr)
+.def_property("expressions", &TestSet::expressions, nullptr)
+.def("check_state", &TestSet::check_state, "state"_a)
+.def("check_constellation", &TestSet::check_constellation, "constellation"_a)
 ;
 
 py::class_<RandomStateGenerator>(m, "RandomStateGenerator")
 .def(py::init<size_t>(), "seed"_a=0)
+.def_static("build_random_seed", &RandomStateGenerator::build_random_seed)
 .def_property("seed", &RandomStateGenerator::seed, nullptr)
 .def_property("random_engine", &RandomStateGenerator::random_engine, nullptr)
 .def("generate_random", &RandomStateGenerator::generate_random, "type"_a)
+.def("generate_random_valid", &RandomStateGenerator::generate_random_valid, "type"_a, "niteration"_a=1)
 ;
 
 }

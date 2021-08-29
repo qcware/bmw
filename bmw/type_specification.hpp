@@ -38,6 +38,11 @@ TypeSpecification(
     for (auto rule : rules_) {
         if (rule.max_index() >= nfeature_) throw std::runtime_error("rule.max_index >= nfeature");
     }
+
+    active_feature_mask_.resize(nfeature_);
+    for (uint32_t index : active_features_) {
+        active_feature_mask_[index] = true;
+    }
 }
 
 size_t nfeature() const { return nfeature_; }
@@ -58,7 +63,42 @@ size_t nrule() const { return rules_.size(); }
 const std::vector<std::vector<uint32_t>>& groups() const { return groups_; }
 const std::vector<SimpleBinaryImplication>& rules() const { return rules_; }
 
-const std::vector<uint32_t> active_features() const { return active_features_; }
+const std::vector<uint32_t>& active_features() const { return active_features_; }
+const std::vector<bool>& active_feature_mask() const { return active_feature_mask_; }
+
+bool check_nfeature(
+    const std::vector<bool>& state) const
+{
+    return state.size() == nfeature_;
+}
+
+bool check_groups(
+    const std::vector<bool>& state) const
+{   
+    if (!check_nfeature(state)) return false;
+    for (size_t index = 0; index < nfeature_; index++) {
+        if (state[index] && !active_feature_mask_[index]) return false;
+    }
+    return true;
+}
+
+bool check_rules(
+    const std::vector<bool>& state) const
+{
+    if (!check_nfeature(state)) return false;
+    for (auto rule : rules_) {
+        if (!rule.evaluate(state)) return false;
+    }
+    return true;
+}
+
+bool check_valid(
+    const std::vector<bool>& state) const
+{
+    if (!check_groups(state)) return false;
+    if (!check_rules(state)) return false;
+    return true;
+}
 
 private:
 
@@ -68,6 +108,8 @@ std::vector<SimpleBinaryImplication> rules_;
 
 // memoization (sorted)
 std::vector<uint32_t> active_features_;
+
+std::vector<bool> active_feature_mask_;
 
 };
 

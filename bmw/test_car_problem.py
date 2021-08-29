@@ -146,6 +146,7 @@ class TestCarProblem(object):
             )
 
 from .type_specification import TypeSpecification
+from .test_set import TestSet
 
 class TestCarProblemTranslater(object):
 
@@ -176,4 +177,12 @@ class TestCarProblemTranslater(object):
 
             types.append(type3)
 
-        return types
+        test_set = TestSet(
+            weights=problem.test_weights,
+            counts=problem.test_counts,
+            expressions=problem.test_expressions,
+            )
+
+        return types, test_set
+
+

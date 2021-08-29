@@ -39,10 +39,63 @@ for index in range(len(problem.test_weights)):
         ))
 print(len(problem.test_weights))
 
-generator = bmw.RandomStateGenerator(seed=0)
+# generator = bmw.RandomStateGenerator(seed=0)
+generator = bmw.RandomStateGenerator.build_random_seed()
 
-state = generator.generate_random(type=problem2[0])
-print(state)
+for tindex, typ in enumerate(problem2):
+
+    print('Type %d:' % tindex)
+# state = generator.generate_random(type=typ)
+    state = [False]*typ.nfeature
+    
+    
+    print(typ.check_nfeature(state))
+    print(typ.check_groups(state))
+    print(typ.check_rules(state))
+    print(typ.check_valid(state))
+    
+    for rindex, rule in enumerate(typ.rules):
+        if (rule.evaluate(state)): continue
+        print('%3d : %4s %s' % (rindex, rule.evaluate(state), rule))
+
+for tindex, typ in enumerate(problem2):
+
+    state = [False]*typ.nfeature
+    print('Type %2d: %1d' % (tindex, sum(1 for rule in typ.rules if not rule.evaluate(state))))
+
+
+print("Special Type 5 Solution:")
+
+typ = problem2[5]
+
+state = [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, True, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, True, False, False, False, False, False, True, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, True, False, False, False, False, False, False, False, False, False, False, False, False, True, False, False, False, False, True, False, False, False, False, False, False, False, False, False, True, False, False, False, False, False, False, False, True, False, False, False, False, False, True, False, False, True, True, False, False, False, True, False, False, False, False, True, False, True, True, False, False, False, False, True, False, True, False, True, True, False, True, False, True, False, False, False, False, False, False, True, True, False, True, True, False, False, True, False, False, False, True, False, False, False, True, False, False, False, False, False, True, True, True, False, False, True, False, True, True, True, False, True, False, False, False, True, False, True, False, False, False, False, False, False, True, True, False, False, True, False, True, False, True, True, True, True, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, True, False, True, False, False, False, True, False, False, False, False, False, False, False, False, False, False, False, False, False, False, True, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, True, False, False, False, False, False, True, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, True, False, False, False, False, False, False, True, True, False, False, False, False, False, False, False, False, True, True, False, True, False, False, False, False, False, False, False, True, False, False, True, True, False, False, True, False, False, False, True, False, False, True, False, True, False, False, True, True, False, True, False, False, True, False, True, False, True, False, False, False, False, False, False, False, False, True, True, False, True, False, False, False, False, False, True, False, False, False, False, False, False, True, False, True, False]
+
+print(typ.check_nfeature(state))
+print(typ.check_groups(state))
+print(typ.check_rules(state))
+print(typ.check_valid(state))
+
+for rindex, rule in enumerate(typ.rules):
+    if (rule.evaluate(state)): continue
+    print('%3d : %4s %s' % (rindex, rule.evaluate(state), rule))
+
+# print(problem2[5].nrule)
+# import time
+# start = time.time()
+# # state = generator.generate_random_valid(type=problem2[5], niteration=1000000)
+# state = generator.generate_random_valid(type=problem2[5], niteration=1000000)
+# stop = time.time()
+# delta = stop - start
+# print(delta, 1000000 / delta)
+# print(state)
+
+if len(state) == 0: fuck()
+
+sval = 0
+for test in problem.test_expressions:
+    print(test.evaluate(state))
+    if test.evaluate(state): sval += 1
+print(sval)
 
 # type_rule = problem2[5]
 # 

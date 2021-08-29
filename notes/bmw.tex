@@ -117,6 +117,24 @@ in ascending order.
 \item The number of Features $n_{F}$ is 469. 
 \end{enumerate}
 
+\subsubsection{Notes on Problem Seeding}
+
+\begin{enumerate}
+\item A guess of $\vec 0$ does not satisfy build rules for any type. Between $2$
+and $4$ (inclusive) build rules are violated, depending on the type. All
+implications of these build rules are ``any on'' types. The cardinalities are 2:
+3, 3: 15, 4: 6.
+\item Valid cars of all types can be found by chasing the $\vec 0$ build rules
+zero levels deep to fix the predicates of the violated rules. There are between
+4 and 609 valid cars per type.
+\item Valid Type 2, 13, 24 cars (the smallest $\vec 0$ rule violators with
+$2\times$ rules each) can be found by chasing the $\vec 0$ build rules
+violations one level deep to fix the implications of the violated rules. There
+are 150, 175, and 175 valid cars, respectively.
+\item Valid Type 5 cars (the smallest type) can be found efficiently by random
+search.
+\end{enumerate}
+
 
 % \bibliography{jrncodes.bib,refs.bib}
 % \bibliographystyle{aip}
