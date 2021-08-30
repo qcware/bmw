@@ -1,4 +1,3 @@
-import numpy as np
 import re
 
 from .simple_binary_implication import SimpleBinaryImplication
@@ -114,7 +113,7 @@ class TestCarProblem(object):
         return test_counts, test_expressions
 
     @staticmethod
-    def parse_problem(
+    def parse(
         *,
         filepath,
         ):
@@ -145,7 +144,7 @@ from .test_set import TestSet
 class TestCarProblemTranslater(object):
 
     @staticmethod
-    def translate_problem(
+    def translate(
         *,
         problem,
         ):
@@ -176,6 +175,23 @@ class TestCarProblemTranslater(object):
             expressions=problem.test_expressions,
             )
 
-        return types, test_set
+        return problem.groups, types, test_set
+
+from .bmw_plugin import Problem
+
+@staticmethod
+def _problem_parse(filepath):
+
+    problem2 = TestCarProblem.parse(filepath=filepath)
+    
+    groups, type_specifications, test_set = TestCarProblemTranslater.translate(problem=problem2)
+
+    return Problem(
+        groups=groups,
+        type_specifications=type_specifications,
+        test_set=test_set,
+        )
+    
+Problem.parse = _problem_parse
 
 

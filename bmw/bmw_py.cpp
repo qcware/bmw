@@ -3,6 +3,7 @@
 #include "first_order_all_binary_expression.hpp"
 #include "type_specification.hpp"
 #include "test_set.hpp"
+#include "problem.hpp"
 #include "random_state_generator.hpp"
 #include "hamming_state_generator.hpp"
 #include <pybind11/pybind11.h>
@@ -83,6 +84,17 @@ py::class_<RandomStateGenerator>(m, "RandomStateGenerator")
 .def_property("random_engine", &RandomStateGenerator::random_engine, nullptr)
 .def("generate_random", &RandomStateGenerator::generate_random, "type"_a)
 .def("generate_random_valid", &RandomStateGenerator::generate_random_valid, "type"_a, "niteration"_a=1)
+;
+
+py::class_<Problem>(m, "Problem")
+.def(py::init<
+    const std::vector<std::vector<uint32_t>>&,
+    const std::vector<TypeSpecification>&,
+    const TestSet&>(),
+    "groups"_a, "type_specifications"_a, "test_set"_a)
+.def_property("groups", &Problem::groups, nullptr)
+.def_property("type_specifications", &Problem::type_specifications, nullptr)
+.def_property("test_set", &Problem::test_set, nullptr)
 ;
 
 py::class_<HammingStateGenerator>(m, "HammingStateGenerator")
