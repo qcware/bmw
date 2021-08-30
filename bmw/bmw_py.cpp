@@ -4,6 +4,7 @@
 #include "type_specification.hpp"
 #include "test_set.hpp"
 #include "random_state_generator.hpp"
+#include "hamming_state_generator.hpp"
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
@@ -65,11 +66,10 @@ py::class_<TypeSpecification>(m, "TypeSpecification")
 
 py::class_<TestSet>(m, "TestSet")
 .def(py::init<
-    const std::vector<double>&,
     const std::vector<uint32_t>&,
     const std::vector<FirstOrderAllBinaryExpression>&>(),
-    "weights"_a, "counts"_a, "expressions"_a)
-.def_property("weights", &TestSet::weights, nullptr)
+    "counts"_a, "expressions"_a)
+.def_property("ntest", &TestSet::ntest, nullptr)
 .def_property("counts", &TestSet::counts, nullptr)
 .def_property("expressions", &TestSet::expressions, nullptr)
 .def("check_state", &TestSet::check_state, "state"_a)
@@ -83,6 +83,10 @@ py::class_<RandomStateGenerator>(m, "RandomStateGenerator")
 .def_property("random_engine", &RandomStateGenerator::random_engine, nullptr)
 .def("generate_random", &RandomStateGenerator::generate_random, "type"_a)
 .def("generate_random_valid", &RandomStateGenerator::generate_random_valid, "type"_a, "niteration"_a=1)
+;
+
+py::class_<HammingStateGenerator>(m, "HammingStateGenerator")
+.def_static("generate_distance_2", &HammingStateGenerator::generate_distance_2, "state"_a, "type_specification"_a, "test_set"_a, "nresult_target"_a)
 ;
 
 }

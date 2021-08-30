@@ -9,5 +9,7 @@ from .type_specification import TypeSpecification
 from .test_set import TestSet
 
 from .random_state_generator import RandomStateGenerator
+from .hamming_state_generator import HammingStateGenerator
 
 from .low_seed_generator import LowSeedGenerator
+

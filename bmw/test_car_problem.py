@@ -15,7 +15,6 @@ class TestCarProblem(object):
         types,
         groups,
         rules,
-        test_weights,
         test_counts,
         test_expressions,
         ):
@@ -24,12 +23,10 @@ class TestCarProblem(object):
         self.types = types
         self.groups = groups
         self.rules = rules
-        self.test_weights = test_weights
         self.test_counts = test_counts
         self.test_expressions = test_expressions
 
-        if len(self.test_weights) != len(self.test_counts): raise RuntimeError('len(test_weights) != len(test_counts)')
-        if len(self.test_weights) != len(self.test_expressions): raise RuntimeError('len(test_weights) != len(test_expressions)')
+        if len(self.test_counts) != len(self.test_expressions): raise RuntimeError('len(test_counts) != len(test_expressions)')
 
     @staticmethod
     def parse_types(
@@ -103,7 +100,6 @@ class TestCarProblem(object):
 
         re0 = re.compile('^(\d+)\s*:(.*)$')
 
-        test_weights = []
         test_counts = []
         test_expressions = []
         
@@ -112,11 +108,10 @@ class TestCarProblem(object):
             count = int(mobj.group(1))
             expression = FirstOrderAllBinaryExpression.parse(mobj.group(2).strip())
             weight = 1.0
-            test_weights.append(weight)
             test_counts.append(count)
             test_expressions.append(expression)
         
-        return test_weights, test_counts, test_expressions
+        return test_counts, test_expressions
 
     @staticmethod
     def parse_problem(
@@ -128,7 +123,7 @@ class TestCarProblem(object):
         groups = TestCarProblem.parse_groups(filename='%s/groups.txt' % filepath)
         rules = TestCarProblem.parse_rules(filename='%s/rules.txt' % filepath)
 
-        test_weights, test_counts, test_expressions = TestCarProblem.parse_tests(filename='%s/tests.txt' % filepath)
+        test_counts, test_expressions = TestCarProblem.parse_tests(filename='%s/tests.txt' % filepath)
 
         nfeature = max(
             max([max(_) for _ in types]),
@@ -140,7 +135,6 @@ class TestCarProblem(object):
             types=types,
             groups=groups, 
             rules=rules,
-            test_weights=test_weights,
             test_counts=test_counts,
             test_expressions=test_expressions,
             )
@@ -178,7 +172,6 @@ class TestCarProblemTranslater(object):
             types.append(type3)
 
         test_set = TestSet(
-            weights=problem.test_weights,
             counts=problem.test_counts,
             expressions=problem.test_expressions,
             )
