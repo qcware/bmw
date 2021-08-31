@@ -10,6 +10,7 @@ from .problem import ProblemParser
 from .problem_analysis import ProblemAnalysis
 
 from .random_state_generator import RandomStateGenerator
+from .threaded_random_state_generator import ThreadedRandomStateGenerator
 from .hamming_state_generator import HammingStateGenerator
 
 from .low_seed_generator import LowSeedGenerator

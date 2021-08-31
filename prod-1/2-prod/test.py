@@ -9,6 +9,9 @@ pool_type_indices = dat['type_indices']
 pool_states = dat['states']
 pool_masks = dat['masks']
 
+pool_states = [list(_) for _ in pool_states]
+pool_masks = [list(_) for _ in pool_masks]
+
 max_ncar = 70
 niteration = 10000
 
@@ -17,23 +20,22 @@ current_test_set = problem.test_set
 constellation = []
 constellation_type_indices = []
 
-generator = bmw.RandomStateGenerator.build_random_seed()
+generator = bmw.ThreadedRandomStateGenerator.build_random_seed(nthread=72)
+print(generator.nthread)
 
 for k in range(max_ncar):
 
     print('ncar %d:' % k)
+
+    pool_states = generator.leapfrog_distance_2_mask(
+        states=pool_states,
+        type_specifications=[problem.type_specifications[_] for _ in pool_type_indices],
+        test_set=current_test_set,
+        niteration=niteration,
+        masks=pool_masks)
     
     for tindex in range(len(pool_states)):
 
-        type_specification = problem.type_specifications[pool_type_indices[tindex]]
-    
-        pool_states[tindex] = generator.leapfrog_distance_2_mask(
-            state=pool_states[tindex],
-            type_specification=type_specification,
-            test_set=current_test_set,
-            niteration=niteration,
-            mask=pool_masks[tindex])
-    
         print('%-2d : %3d' % (
             tindex,
             current_test_set.npass_state(state=pool_states[tindex]),
@@ -43,7 +45,7 @@ for k in range(max_ncar):
     
     print(pivot)
     
-    constellation += [pool_states[pivot].copy()]
+    constellation += [pool_states[pivot]]
     constellation_type_indices += [pool_type_indices[pivot]]
 
     print('Constellation npass: %d' % (problem.test_set.npass_constellation(constellation=constellation)))

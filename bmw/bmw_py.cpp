@@ -5,6 +5,7 @@
 #include "test_set.hpp"
 #include "problem.hpp"
 #include "random_state_generator.hpp"
+#include "threaded_random_state_generator.hpp"
 #include "hamming_state_generator.hpp"
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -101,6 +102,14 @@ py::class_<RandomStateGenerator>(m, "RandomStateGenerator")
 .def("leapfrog_distance_2", &RandomStateGenerator::leapfrog_distance_2, "state"_a, "type_specification"_a, "test_set"_a, "niteration"_a)
 .def("leapfrog_distance_2_mask", &RandomStateGenerator::leapfrog_distance_2_mask, "state"_a, "type_specification"_a, "test_set"_a, "niteration"_a, "mask"_a)
 .def("improve_constellation", &RandomStateGenerator::improve_constellation, "constellation"_a, "constellation_types"_a, "problem"_a, "niteration"_a)
+;
+
+py::class_<ThreadedRandomStateGenerator>(m, "ThreadedRandomStateGenerator")
+.def(py::init<const std::vector<RandomStateGenerator>&>(), "generators"_a)
+.def_static("build_random_seed", &ThreadedRandomStateGenerator::build_random_seed, "nthread"_a)
+.def_property("nthread", &ThreadedRandomStateGenerator::nthread, nullptr)
+.def_property("generators", &ThreadedRandomStateGenerator::generators, nullptr)
+.def("leapfrog_distance_2_mask", &ThreadedRandomStateGenerator::leapfrog_distance_2_mask, "states"_a, "type_specifications"_a, "test_set"_a, "niteration"_a, "masks"_a)
 ;
 
 py::class_<HammingStateGenerator>(m, "HammingStateGenerator")
