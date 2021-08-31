@@ -105,9 +105,10 @@ type_indices = np.array(type_indices)
 states = np.array(states)
 masks = np.array(masks)
         
-np.savez(
-    'test.npz',
-    type_indices=type_indices,
-    states=states,
-    masks=masks,
-    )
+# Do not overwrite canonical guess
+# np.savez(
+#     'test.npz',
+#     type_indices=type_indices,
+#     states=states,
+#     masks=masks,
+#     )
