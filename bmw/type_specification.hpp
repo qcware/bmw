@@ -79,6 +79,13 @@ bool check_groups(
     for (size_t index = 0; index < nfeature_; index++) {
         if (state[index] && !active_feature_mask_[index]) return false;
     }
+    for (auto group : groups_) {
+        size_t nhit = 0; 
+        for (auto index : group) {
+            if (state[index]) nhit++;
+        }
+        if (nhit > 1) return false;
+    }
     return true;
 }
 

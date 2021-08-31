@@ -27,6 +27,8 @@ class TestCarProblem(object):
 
         if len(self.test_counts) != len(self.test_expressions): raise RuntimeError('len(test_counts) != len(test_expressions)')
 
+class ProblemParser(object):
+
     @staticmethod
     def parse_types(
         *,
@@ -118,11 +120,11 @@ class TestCarProblem(object):
         filepath,
         ):
 
-        types = TestCarProblem.parse_types(filename='%s/types.txt' % filepath)
-        groups = TestCarProblem.parse_groups(filename='%s/groups.txt' % filepath)
-        rules = TestCarProblem.parse_rules(filename='%s/rules.txt' % filepath)
+        types = ProblemParser.parse_types(filename='%s/types.txt' % filepath)
+        groups = ProblemParser.parse_groups(filename='%s/groups.txt' % filepath)
+        rules = ProblemParser.parse_rules(filename='%s/rules.txt' % filepath)
 
-        test_counts, test_expressions = TestCarProblem.parse_tests(filename='%s/tests.txt' % filepath)
+        test_counts, test_expressions = ProblemParser.parse_tests(filename='%s/tests.txt' % filepath)
 
         nfeature = max(
             max([max(_) for _ in types]),
@@ -182,7 +184,7 @@ from .bmw_plugin import Problem
 @staticmethod
 def _problem_parse(filepath):
 
-    problem2 = TestCarProblem.parse(filepath=filepath)
+    problem2 = ProblemParser.parse(filepath=filepath)
     
     groups, type_specifications, test_set = TestCarProblemTranslater.translate(problem=problem2)
 

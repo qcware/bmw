@@ -23,7 +23,7 @@ size_t ntest() const { return counts_.size(); }
 const std::vector<uint32_t>& counts() const { return counts_; }
 const std::vector<FirstOrderAllBinaryExpression>& expressions() const { return expressions_; }
 
-size_t check_state(
+size_t npass_state(
     const std::vector<bool>& state) const 
 {
     size_t npass = 0;
@@ -32,11 +32,10 @@ size_t check_state(
             npass++;
         }
     }
-
     return npass;
 }
 
-size_t check_constellation(
+size_t npass_constellation(
     const std::vector<std::vector<bool>>& constellation) const 
 {
     size_t npass = 0;
@@ -49,8 +48,35 @@ size_t check_constellation(
             npass++;
         }
     }
-
     return npass;
+}
+
+std::vector<size_t> passes_state(
+    const std::vector<bool>& state) const 
+{
+    std::vector<size_t> passes;
+    for (size_t index = 0; index < counts_.size(); index++) {
+        if (expressions_[index].evaluate(state)) {
+            passes.push_back(index);
+        }
+    }
+    return passes;
+}
+
+std::vector<size_t> passes_constellation(
+    const std::vector<std::vector<bool>>& constellation) const 
+{
+    std::vector<size_t> passes;
+    for (size_t index = 0; index < counts_.size(); index++) {
+        uint32_t count = 0;
+        for (auto state : constellation) {
+            if (expressions_[index].evaluate(state)) count++;
+        }
+        if (count >= counts_[index]) {
+            passes.push_back(index);
+        }
+    }
+    return passes;
 }
 
 private:

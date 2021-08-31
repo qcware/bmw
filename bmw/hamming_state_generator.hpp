@@ -17,6 +17,8 @@ std::vector<std::vector<bool>> generate_distance_2(
     const TestSet& test_set,
     size_t nresult_target) 
 {
+    if (!type_specification.check_valid(state)) throw std::runtime_error("state is not valid");
+
     std::vector<std::vector<std::vector<bool>>> results(test_set.ntest() + 1);
 
     std::vector<bool> start(type_specification.nfeature());
@@ -39,7 +41,7 @@ std::vector<std::vector<bool>> generate_distance_2(
             if (pivot0 > 0) work[group0[pivot0 - 1]] = true;
             if (pivot1 > 0) work[group1[pivot1 - 1]] = true;
             if (!type_specification.check_rules(work)) continue;
-            size_t npass = test_set.check_state(work);
+            size_t npass = test_set.npass_state(work);
             if (npass < min_acceptable_pass) continue;
             results[npass].push_back(work);
         }}
