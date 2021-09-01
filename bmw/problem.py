@@ -136,7 +136,7 @@ class ProblemParser(object):
 
         test_counts, test_expressions = ProblemParser.parse_tests(filename='%s/tests.txt' % filepath)
 
-        test_groups = Problem.ProblemParser.parse_test_groups(filename='%s/test_groups.txt' % filepath)
+        test_groups = ProblemParser.parse_test_groups(filename='%s/test_groups.txt' % filepath)
 
         nfeature = max(
             max([max(_) for _ in types]),
