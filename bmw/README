@@ -1,0 +1,6 @@
+On AWS:
+
+source activate python3
+# only need this once
+conda install pybind11
+make

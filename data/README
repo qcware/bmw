@@ -1,1 +1,3 @@
-raw - contents of https://crowd-innovation.bmwgroup.com/apps/IMT/UploadedFiles/00/f_c0bee78422808163e787943f93f8b9ff/Data-Vehicle_configuration.zip?v=1629466835
+1-raw - contents of https://crowd-innovation.bmwgroup.com/apps/IMT/UploadedFiles/00/f_c0bee78422808163e787943f93f8b9ff/Data-Vehicle_configuration.zip?v=1629466835
+2-polished - minimal contents of 1-raw extracted into indivdual simple files without headers
+3-refined - feature groups 40 and 41 made non-intersecting with new rules added to compensate. Same problem, but now all groups are nonintersecting. Random test groups in 1-5 (uniform random) generated.
