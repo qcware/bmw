@@ -46,8 +46,6 @@ for k in range(max_ncar):
     
     pivot = np.argmax([current_test_set.npass_state(state=_) for _ in pool_states])
     
-    print(pivot)
-    
     constellation += [pool_states[pivot]]
     constellation_type_indices += [pool_type_indices[pivot]]
 

@@ -140,8 +140,20 @@ std::vector<bool> leapfrog_distance_2_mask(
         auto group0 = type_specification.groups()[group_index0];
         auto group1 = type_specification.groups()[group_index1];
 
-        for (auto i0 : group0) if (mask[i0]) continue;
-        for (auto i1 : group1) if (mask[i1]) continue;
+        bool masked = false;
+        for (auto i0 : group0) {
+            if (mask[i0]) {
+                masked = true;
+                break;
+            }
+        }
+        for (auto i1 : group1) {
+            if (mask[i1]) {
+                masked = true;
+                break;
+            }
+        }
+        if (masked) continue;
 
         trial = result;
         for (auto i0 : group0) trial[i0] = false;
