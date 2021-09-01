@@ -1,6 +1,9 @@
 import bmw
 import numpy as np
 
+import sys
+key = sys.argv[1]
+
 problem = bmw.Problem.parse(filepath='../../data/3-refined')
 
 # Guess for pool
@@ -71,7 +74,7 @@ for i2, index in enumerate(indices2):
         problem.test_set.expressions[index]))
 
 np.savez(
-    'test.npz',
+    'test-%s.npz' % key,
     constellation=constellation,
     constellation_type_indices=constellation_type_indices,
     )
