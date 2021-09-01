@@ -16,6 +16,7 @@ class TestCarProblem(object):
         rules,
         test_counts,
         test_expressions,
+        test_groups,
         ):
 
         self.nfeature = nfeature
@@ -26,6 +27,7 @@ class TestCarProblem(object):
         self.test_expressions = test_expressions
 
         if len(self.test_counts) != len(self.test_expressions): raise RuntimeError('len(test_counts) != len(test_expressions)')
+        if len(self.test_counts) != len(self.test_groups): raise RuntimeError('len(test_counts) != len(test_groups)')
 
 class ProblemParser(object):
 
@@ -115,6 +117,14 @@ class ProblemParser(object):
         return test_counts, test_expressions
 
     @staticmethod
+    def parse_test_groups(
+        *,
+        filename,
+        ):
+
+        return list(np.readtxt(filename))        
+
+    @staticmethod
     def parse(
         *,
         filepath,
@@ -125,6 +135,8 @@ class ProblemParser(object):
         rules = ProblemParser.parse_rules(filename='%s/rules.txt' % filepath)
 
         test_counts, test_expressions = ProblemParser.parse_tests(filename='%s/tests.txt' % filepath)
+
+        test_groups = Problem.ProblemParser.parse_test_groups(filename='%s/test_groups.txt' % filepath)
 
         nfeature = max(
             max([max(_) for _ in types]),
@@ -138,6 +150,7 @@ class ProblemParser(object):
             rules=rules,
             test_counts=test_counts,
             test_expressions=test_expressions,
+            test_groups=test_groups,
             )
 
 from .type_specification import TypeSpecification
@@ -177,7 +190,7 @@ class TestCarProblemTranslater(object):
             expressions=problem.test_expressions,
             )
 
-        return problem.groups, types, test_set
+        return problem.groups, types, test_set, problem.test_groups
 
 from .bmw_plugin import Problem
 
@@ -186,12 +199,13 @@ def _problem_parse(filepath):
 
     problem2 = ProblemParser.parse(filepath=filepath)
     
-    groups, type_specifications, test_set = TestCarProblemTranslater.translate(problem=problem2)
+    groups, type_specifications, test_set, problem.test_groups = TestCarProblemTranslater.translate(problem=problem2)
 
     return Problem(
         groups=groups,
         type_specifications=type_specifications,
         test_set=test_set,
+        test_groups=test_groups,
         )
     
 Problem.parse = _problem_parse

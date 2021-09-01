@@ -85,11 +85,13 @@ py::class_<Problem>(m, "Problem")
 .def(py::init<
     const std::vector<std::vector<uint32_t>>&,
     const std::vector<TypeSpecification>&,
-    const TestSet&>(),
-    "groups"_a, "type_specifications"_a, "test_set"_a)
+    const TestSet&>,
+    const std::vector<uint32_t>&>(),
+    "groups"_a, "type_specifications"_a, "test_set"_a, "test_groups"_a)
 .def_property("groups", &Problem::groups, nullptr)
 .def_property("type_specifications", &Problem::type_specifications, nullptr)
 .def_property("test_set", &Problem::test_set, nullptr)
+.def_property("test_groups", &Problem::test_groups, nullptr)
 ;
 
 py::class_<RandomStateGenerator>(m, "RandomStateGenerator")
