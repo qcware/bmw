@@ -1,4 +1,5 @@
 import re
+import numpy as np
 
 from .simple_binary_implication import SimpleBinaryImplication
 from .first_order_all_binary_expression import FirstOrderAllBinaryExpression
@@ -25,6 +26,7 @@ class TestCarProblem(object):
         self.rules = rules
         self.test_counts = test_counts
         self.test_expressions = test_expressions
+        self.test_groups = test_groups
 
         if len(self.test_counts) != len(self.test_expressions): raise RuntimeError('len(test_counts) != len(test_expressions)')
         if len(self.test_counts) != len(self.test_groups): raise RuntimeError('len(test_counts) != len(test_groups)')
@@ -122,7 +124,7 @@ class ProblemParser(object):
         filename,
         ):
 
-        return list(np.readtxt(filename))        
+        return list(np.loadtxt(filename, dtype=np.uint32))        
 
     @staticmethod
     def parse(
@@ -199,7 +201,7 @@ def _problem_parse(filepath):
 
     problem2 = ProblemParser.parse(filepath=filepath)
     
-    groups, type_specifications, test_set, problem.test_groups = TestCarProblemTranslater.translate(problem=problem2)
+    groups, type_specifications, test_set, test_groups = TestCarProblemTranslater.translate(problem=problem2)
 
     return Problem(
         groups=groups,

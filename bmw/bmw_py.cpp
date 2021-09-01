@@ -85,7 +85,7 @@ py::class_<Problem>(m, "Problem")
 .def(py::init<
     const std::vector<std::vector<uint32_t>>&,
     const std::vector<TypeSpecification>&,
-    const TestSet&>,
+    const TestSet&,
     const std::vector<uint32_t>&>(),
     "groups"_a, "type_specifications"_a, "test_set"_a, "test_groups"_a)
 .def_property("groups", &Problem::groups, nullptr)
@@ -108,7 +108,8 @@ py::class_<RandomStateGenerator>(m, "RandomStateGenerator")
 
 py::class_<ThreadedRandomStateGenerator>(m, "ThreadedRandomStateGenerator")
 .def(py::init<const std::vector<RandomStateGenerator>&>(), "generators"_a)
-.def_static("build_random_seed", &ThreadedRandomStateGenerator::build_random_seed, "nthread"_a)
+.def_static("build_random_seed", &ThreadedRandomStateGenerator::build_random_seed, "nthread"_a=0)
+.def_static("omp_get_max_threads", &ThreadedRandomStateGenerator::omp_get_max_threads)
 .def_property("nthread", &ThreadedRandomStateGenerator::nthread, nullptr)
 .def_property("generators", &ThreadedRandomStateGenerator::generators, nullptr)
 .def("leapfrog_distance_2_mask", &ThreadedRandomStateGenerator::leapfrog_distance_2_mask, "states"_a, "type_specifications"_a, "test_set"_a, "niteration"_a, "masks"_a)

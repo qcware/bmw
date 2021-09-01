@@ -3,7 +3,9 @@
 #include <vector>
 #include "random_state_generator.hpp"
 
+#ifdef _OPENMP
 #include <omp.h>
+#endif
 
 namespace bmw {
 
@@ -20,13 +22,25 @@ size_t nthread() const { return generators_.size(); }
 const std::vector<RandomStateGenerator>& generators() const { return generators_; }
 
 static
-ThreadedRandomStateGenerator build_random_seed(size_t nthread) 
+ThreadedRandomStateGenerator build_random_seed(size_t nthread=0) 
 {
+    if (nthread == 0) nthread = ThreadedRandomStateGenerator::omp_get_max_threads();
+
     std::vector<RandomStateGenerator> generators;
     for (size_t index = 0; index < nthread; index++) {
         generators.push_back(RandomStateGenerator::build_random_seed());
     }
     return ThreadedRandomStateGenerator(generators);
+}
+
+static
+size_t omp_get_max_threads()
+{
+    size_t nthread = 1;
+    #ifdef _OPENMP
+        nthread = ::omp_get_max_threads();
+    #endif
+    return nthread;
 }
 
 std::vector<std::vector<bool>> leapfrog_distance_2_mask(
@@ -43,7 +57,10 @@ std::vector<std::vector<bool>> leapfrog_distance_2_mask(
 
     #pragma omp parallel for num_threads(nthread()) schedule(dynamic, 1)
     for (size_t index = 0; index < states.size(); index++) {
-        size_t tindex = omp_get_thread_num();
+        size_t tindex = 0;
+        #ifdef _OPENMP
+            tindex = omp_get_thread_num();
+        #endif
         results[index] = generators_[tindex].leapfrog_distance_2_mask(
             states[index],
             type_specifications[index],

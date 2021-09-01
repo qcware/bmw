@@ -23,8 +23,7 @@ current_test_set = problem.test_set
 constellation = []
 constellation_type_indices = []
 
-generator = bmw.ThreadedRandomStateGenerator.build_random_seed(nthread=72)
-print(generator.nthread)
+generator = bmw.ThreadedRandomStateGenerator.build_random_seed()
 
 for k in range(max_ncar):
 
