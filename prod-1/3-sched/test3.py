@@ -46,6 +46,8 @@ while len(test_indices):
     
     for t2, test_index in enumerate(test_indices):
 
+        group_index = problem.test_groups[test_index]
+
         expression = problem.test_set.expressions[test_index]
         count = problem.test_set.counts[test_index]
 
@@ -56,6 +58,19 @@ while len(test_indices):
         found = False
         for car_index in car_candidates:
             if car_index in car_slot: continue
+            
+            # Check DAG Rules
+            breaks_dag = False
+            for time_index in range(len(test_array)):
+                if not car_index in car_array[time_index]: continue
+                slot_index = car_array[time_index].index(car_index)
+                test_index2 = test_array[time_index][slot_index] 
+                group_index2 = problem.test_groups[test_index2]
+                if group_index < group_index2:
+                    breaks_dag = True
+                    break
+            if breaks_dag: continue
+
             test_slot.append(test_index)
             car_slot.append(car_index)
             test_counts[test_index] += 1
@@ -78,6 +93,9 @@ while len(test_indices):
         car_array.append(car_slot)      
         test_slot = []
         car_slot = []
+
+test_array.append(test_slot)
+car_array.append(car_slot)
         
 print('Test Groups:\n')
 for time, test_slot in enumerate(test_array):        
@@ -99,6 +117,8 @@ for t2 in range(len(test_counts)):
     print('%-3d : %1d %1d %r' % (t2, problem.test_set.counts[t2], test_counts[t2], 
         problem.test_set.counts[t2] == test_counts[t2]))
 print('')
+
+print(np.sum(problem.test_set.counts))
     
 
 
