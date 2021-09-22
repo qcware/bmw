@@ -40,17 +40,23 @@ prev = 0
 for index in range(len(test_groups)):
     current = int(test_groups[index])
     if current < prev:
-        print('test group %d performed after %d' % (current,prev))
         current_car_index = int(car_indices[index])
-        print('Current car is %d at slot %d' % (current_car_index,index))
         for cindex in range(index+1):
             icar = int(car_indices[cindex])
+            test_prev = 0
             if icar == current_car_index:
                 itest = int(test_indices[cindex])
                 problem_test_group = problem.test_groups[itest]
-                print('Car %d was underwent test %d of group %d at previous slot %d' % (
-                      current_car_index,itest,problem_test_group,cindex))
+                if itest < test_prev:
+                    print('Car %d undergoes test %d before test %d.' % (current_car_index,itest,test_prev))
+                test_prev = itest
     prev = current
 
 # Check if test not satisfying number of cars
+for tindex in range(len(test_indices)):
+    count_solution = test_indices.count(test_indices[tindex])
+    count_problem = problem.test_set.counts[int(test_indices[tindex])]
+    if count_solution != count_problem:
+        print('Test index %s requires %d tests but satisfies %d' % (
+              test_indices[tindex],count_problem,count_solution))
 
