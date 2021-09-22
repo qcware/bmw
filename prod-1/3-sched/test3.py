@@ -22,13 +22,13 @@ for tindex2, tindex1 in enumerate(test_indices):
 
     passes = [index for index, state in enumerate(constellation) if expression.evaluate(state)]
 
-    print('%3d : %3d %1d : %3d %3d' % (
-        tindex2, 
-        tindex1, 
-        problem.test_groups[tindex1],
-        len(passes), 
-        count,
-        ))
+    # print('%3d : %3d %1d : %3d %3d' % (
+    #     tindex2, 
+    #     tindex1, 
+    #     problem.test_groups[tindex1],
+    #     len(passes), 
+    #     count,
+    #     ))
 
 nslot = 10
 
@@ -71,6 +71,16 @@ while len(test_indices):
                     break
             if breaks_dag: continue
 
+            breaks_mult = False
+            for time_index in range(len(test_array)):
+                if not car_index in car_array[time_index]: continue
+                slot_index = car_array[time_index].index(car_index)
+                test_index2 = test_array[time_index][slot_index] 
+                if test_index == test_index2:
+                    breaks_mult = True
+                    break
+            if breaks_mult: continue
+
             test_slot.append(test_index)
             car_slot.append(car_index)
             test_counts[test_index] += 1
@@ -94,8 +104,9 @@ while len(test_indices):
         test_slot = []
         car_slot = []
 
-test_array.append(test_slot)
-car_array.append(car_slot)
+if len(test_slot):
+    test_array.append(test_slot)
+    car_array.append(car_slot)
         
 print('Test Groups:\n')
 for time, test_slot in enumerate(test_array):        
@@ -112,13 +123,13 @@ for time, test_slot in enumerate(test_array):
     print('%-3d : %s' % (time, ' '.join(['%3d' % test_index for test_index in test_slot])))
 print('')
 
-print('Test Count Checks:\n')
-for t2 in range(len(test_counts)):
-    print('%-3d : %1d %1d %r' % (t2, problem.test_set.counts[t2], test_counts[t2], 
-        problem.test_set.counts[t2] == test_counts[t2]))
-print('')
+# print('Test Count Checks:\n')
+# for t2 in range(len(test_counts)):
+#     print('%-3d : %1d %1d %r' % (t2, problem.test_set.counts[t2], test_counts[t2], 
+#         problem.test_set.counts[t2] == test_counts[t2]))
+# print('')
 
-print(np.sum(problem.test_set.counts))
+# print(np.sum(problem.test_set.counts))
     
 
 
