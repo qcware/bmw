@@ -91,7 +91,7 @@ constraints formulated for this model. It, thus, represents the real complexity
 arising in a productive setting.''
 
 Within the problem statement document, solutions to the above problems were
-attempted using existing industry-standard sat solvers and constraint
+attempted using existing industry-standard SAT solvers and constraint
 satisfaction solvers. The SAT problem of (1) was easily solved:
 ``For 100 cars, the problem can be solved in a few seconds. A linear search counting down
 from 100 revealed the solution that at least 60 cars are needed to perform all the specified
@@ -102,6 +102,17 @@ chosen approach.''
 Additionally, the scheduling problem of (3) was not solvable:
 ``[O]n the test laptop, the full problem with 700 tests wasn't solvable in less than 24
 hours.''
+
+\begin{figure*}[ht]
+\begin{center}
+\includegraphics[width=4in]{figures/solution.pdf}
+\caption{Characteristics of QC Ware solutions to the ``optimizing the production
+of test vehicles'' BMW quantum computing challenge problem. (A) Solutions
+to the MAX-SAT, and by corollary, SAT variants of problem variants (2) and (1),
+respectively. (B) Solution to the scheduling problem variant (3).}
+\label{fig:solution}
+\end{center}
+\end{figure*}
 
 \textbf{We provide what we believe under the rules of the problem statement
 represents a complete and tangible solution to all three specified problems.}
@@ -156,7 +167,7 @@ feature groups, the type-specific build rules, the full set of test rules and
 corresponding multiplicities, eventually yielding a complete C++ representation
 of the full problem. The critical configuration state space of each test vehicle
 is efficiently represented by the \texttt{std::vector<bool>} concept, i.e., each
-proposed test vehicle is represented by a std::vector<bool> containing the
+proposed test vehicle is represented by a \texttt{std::vector<bool>} containing the
 states of the $\sim 469$ features of each vehicle.
  The entire library is reflexively exposed to Python3 through PyBind11 to merge
 the effortless development of Python (i.e., regex for data parsing, short python
@@ -189,10 +200,10 @@ select another type and repeat ad inifitum.
 At the end of this procedure we have a pool of $\sim 644$ test vehicles which
 are largely ``featureless'' meaning that only the minimal number of features
 have been activated to satisfy the test and chase the constraints into the valid
-type build rule space. All tests are present in at least one vehicle in this
+type build rule space. All test rules are present in at least one test vehicle in this
 starting pool.
 
-\subsection{Max-SAT Optimization}
+\subsection{MAX-SAT Optimization}
 
 We start from the empty constellation $n_{\mathrm{C}} = 0$. To update this
 constellation to $n_{\mathrm{C}} = 1$, we adopt the following procedure:
@@ -205,10 +216,11 @@ respecting the hard constraints. The Monte Carlo moves are described below.
 that maximally increases the number of satisfied tests in the constellation.
 \item We update the test set used to direct the Monte Carlo moves in Step 1 to
 include only those rules which are unsatisfied by the current constellation.
-\item We iterate this procedure until all test rules are satisfied.
+\item We iterate this procedure until all test rules are satisfied, increasing
+the constellation size $n_{\mathrm{C}}$ by one test vehicle per iteration.
 \end{enumerate}
 At the end of this procedure, we have a set of $n_{\mathrm{C}}$ nested
-constellations each of which is a local approximant to the Max-SAT [Problem (2)]
+constellations each of which is a local approximant to the MAX-SAT [Problem (2)]
 solution of corresponding constellation size. Once we obtain a constellation
 that saturates all tests, we have an upper bound for the SAT solution [Problem
 (1)] which turns out to be tight for the specifics of this problem instance.
@@ -263,16 +275,16 @@ anisotropic task sizes encountered.
 
 \subsection{Scheduling}
 
-For scheduling, we were initially considering doing some seriously exotic stuff
+For scheduling, we were initially considering doing some rather exotic work
 involving global optimization, i.e., building a different constellation of test
 vehicles that would be more optimized for the scheduling objective function than
-for the MAX-SAT objective fnction. However, we started by exploring an extremely
+for the MAX-SAT objective function. However, we started by exploring an extremely
 simple greedy approach involving attempting to schedule our existing SAT/MAX-SAT
 constellation of $n_{\mathrm{C}} = 60$ test vehicles, and found that it produced
 almost dense packing. Therefore, we will only explain the latter approach here. 
 
 The scheduling heuristic approach works as follows:
-\begin{itemize}
+\begin{enumerate}
 \item We first sort the test rules by test group (first priority) and by
 number of required cars for the test (second priority).
 \item We traverse the current priority-sorted test set.
@@ -292,7 +304,7 @@ the slot onto the schedule.
 test rule set to remove this rule if so.
 \item We iterate from 2 until all test rules are satisfied, as evidenced by the
 active test set becoming empty.
-\end{itemize}
+\end{enumerate}
 
 There is a small chance that this algorithm will enter an infinite loop where a
 critical car is greedily used for a lower-priority test, and therefore cannot be
@@ -304,7 +316,7 @@ Note that we find the absence of specified test groups in the problem
 specification to be a major weakness of this part of the challenge. We generated
 test groups ranging from 1 to 5 from random integers as sketched in the problem
 statement. We did this exactly once using \texttt{numpy.random.randint} and
-stored the values in our github repository - i.e,. we generated what we feel is
+stored the values in our github repository - i.e., we generated what we feel is
 a fair test and then froze it. Note also that we elected to define the priority
 order to be sorted from $1$ to $5$ rather than from $5$ to $1$ in the problem
 statement for aesthetic reasons - as these values are randomly generated this
