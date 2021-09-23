@@ -375,6 +375,62 @@ large relative to the the intersection. In future, it is recommended that
 collisions between feature groups be avoided at all costs in the formulation of
 this problem, insofar as is possible.
 
+\section{Solution Verification}
+
+A standalone Python code was used to verify that the solutions reported satisfy
+both the buildability and test constraints.
+
+The MAX-SAT heuristic produced a constellation of test vehicles with specifed
+active features. The test vehicles must comply with a set of buildability
+constraints related 1) vehicle type, 2) feature group exclusivity, and
+3) configuration rules.
+
+Each vehicle can be one of 25 types, which dictates allowed features. 
+The type rules were sorted in a (\textit{number of types} $\times$
+\textit{number of available features}) boolean array, with allowed features set
+to True. For each vehicle in the solution constellation, if a feature was True,
+it was compared to the allowed features for that vehicle type to assert that the
+vehicle met type rules.
+
+The feature groups constraints consist of 42 feature groups, which contain a set
+of mutally exclusive features. For each test vehicle, one feature in the group can
+be true. The feature groups were sorted in a (\textit{number of groups} $\times$
+\textit{number of available features}) boolean array with each feature in the group
+set to True. For each test vehicle, if a feature was True, the feature group for
+which that feature was present was found and the bitwise AND was taken between
+these two arrays, returning one True value if satisfied.
+
+The set of test vehicles must also satisfy the configuration constraints. For a
+given test vehicle type, a set of features is either forced and/ or forbidden
+based on the presence and absense of specific features. There are 4032
+configuration constraints in the problem. Each configuration rule was separated
+into an initial condition and a forced implication. Theses were further reduced
+to 'on' sets, 'off' sets, and sets where 'any' one feature can be true, all of
+which were stored as True in boolean arrays. For each test vehicle, the
+configuration rules associated with the vehicle type were evaulated. First the 
+initial condition then forced implication was checked, in the same procedure
+outlined below. 1) If the rule had a set of 'on' features, the logical AND of
+the test vehicle features and 'on' features rule was computed. The number of
+True values in the resultant array should equal those in the 'on' features array
+if satisfied. 2) If the rule had a set of 'off' features, the array of features
+for the test vehicle was inverted, so that 'off' features were set to True. Then
+the logical AND was computed, which should have the same number of True elements
+as the 'off' features array if satisfied. 3) If the rule had an 'any' set, where
+one of the features must be true, the AND was taken between the 'any' features
+array and the test vehicle features, which should return one True value.
+
+For the scheduling solution, we verified that the results obey the scheduling
+rules. The scheduling rules stipulate that there are up to 10 tests per day and
+that each vehicle can undergo one test per day. We check that for each test day,
+each vehicle index appears once. Next, each test is ranked in a group, and for
+each test vehicle, it must undergo tests in order according to the test ranking.
+To test that this condition is satisfied, we sort through the group rank of each
+test vehicle. If a group index is out of order, we find which vehicle is in that
+slot, and trace back all previous tests that the vehicle underwent. If the tests
+for that specific vehicle are in order of ranking, the test set satisfies the test
+group rank rules. Finally, each test requires a certain number of test vehicles.
+For each test, we find and count all occurences of that specific test and compare
+it to number required for a test. 
 
 % \bibliography{jrncodes.bib,refs.bib}
 % \bibliographystyle{aip}
