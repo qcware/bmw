@@ -148,7 +148,7 @@ for sol_car_i in range(len(constellation)):
                             num_tests_passed[sol_car_i] += 1
                     if (impl_num_on == 0 and impl_num_off == 0 and impl_num_any != 0):       # implication: any only
                         test_impl_any = np.logical_and(constellation[sol_car_i][:],dat_implication_forced_any_on[rule_i][:])
-                        if sum(test_impl_any) != 0:
+                        if sum(test_impl_any) == 1:
                             num_tests_passed[sol_car_i] += 1
             if (cond_num_on == 0 and cond_num_off != 0 and cond_num_any == 0):               # conditions: off only
                 temp = np.invert(constellation[sol_car_i][:])
@@ -165,11 +165,11 @@ for sol_car_i in range(len(constellation)):
                             num_tests_passed[sol_car_i] += 1
                     if (impl_num_on == 0 and impl_num_off == 0 and impl_num_any != 0):       # implication: any only
                         test_impl_any = np.logical_and(constellation[sol_car_i][:],dat_implication_forced_any_on[rule_i][:])
-                        if sum(test_impl_any) != 0:
+                        if sum(test_impl_any) == 1:
                             num_tests_passed[sol_car_i] += 1
             if (cond_num_on == 0 and cond_num_off == 0 and cond_num_any != 0):               # conditions: any only
                 test_cond_any = np.logical_and(constellation[sol_car_i][:],dat_condition_forced_any_on[rule_i][:])
-                if sum(test_cond_any) != 0:
+                if sum(test_cond_any) == 1:
                     if (impl_num_on != 0 and impl_num_off == 0 and impl_num_any == 0):       # implication: on only
                         test_impl_on = np.logical_and(constellation[sol_car_i][:],dat_implication_forced_all_on[rule_i][:])
                         if sum(test_impl_on) == sum(dat_implication_forced_all_on[rule_i][:]):
@@ -181,7 +181,7 @@ for sol_car_i in range(len(constellation)):
                             num_tests_passed[sol_car_i] += 1
                     if (impl_num_on == 0 and impl_num_off == 0 and impl_num_any != 0):       # implication: any only
                         test_impl_any = np.logical_and(constellation[sol_car_i][:],dat_implication_forced_any_on[rule_i][:])
-                        if sum(test_impl_any) != 0:
+                        if sum(test_impl_any) == 1:
                             num_tests_passed[sol_car_i] += 1
             if (cond_num_on != 0 and cond_num_off != 0 and cond_num_any == 0):               # conditions: on and off only
                 test_cond_on = np.logical_and(constellation[sol_car_i][:],dat_condition_forced_all_on[rule_i][:])
@@ -199,7 +199,7 @@ for sol_car_i in range(len(constellation)):
                             num_tests_passed[sol_car_i] += 1
                     if (impl_num_on == 0 and impl_num_off == 0 and impl_num_any != 0):       # implication: any only
                         test_impl_any = np.logical_and(constellation[sol_car_i][:],dat_implication_forced_any_on[rule_i][:])
-                        if sum(test_impl_any) != 0:
+                        if sum(test_impl_any) == 1:
                             num_tests_passed[sol_car_i] += 1
 
             # never encountered
