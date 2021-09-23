@@ -6,3 +6,8 @@ env - simple environment shell scripts to add bmw to PYTHONPATH
 prod-1 - first production run of test case
 notes - working notes on observations of problems
 report - placeholder for finished project report
+
+solutions - finished copies of the numerical data of the QC Ware solutions,
+    i.e., detailed feature state space configurations and car types for the
+    MAX-SAT problem and the detailed schedule of constellation car indices and
+    test indices for the Scheduling problem.

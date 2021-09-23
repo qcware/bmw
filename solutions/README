@@ -1,0 +1,21 @@
+max-sat-solution.npz - Solutions of MAX-SAT variant of the problem for various
+    constellation sizes ranging from 1 to 70. These solutions nest. This file
+    contains two fields: "constellation" a (70, 469)-shape boolean array
+    describing the car feature set state space on each row and
+    "constellation_type_indices" a (70,)-shape integer array describing the car
+    type index for each row of "constellation". These two data fields represent
+    the complete state space solutions of the MAX-SAT problem. Note that all
+    644 test rules are exactly satisfied by the 60-car constellation, so the
+    extra cars from index 60 onward do not improve the solution and may be
+    discarded.
+scheduling-solution.txt - Solution of the Scheduling variant of the problem
+    using the 60-car exact SAT constellation from the previous paragraph to
+    schedule all 766 unique tests (including multiplicity considerations) over
+    78 days with a maximum of 10 tests on distinct cars performed on within
+    each day, and respecting test group priorities and performing multi-car
+    tests on different cars. Each entry in this file contains the timeslot
+    (i.e., "day") on the rows and the testslot (i.e., "engineer") on the columns.
+    The "Car Indices" entry lists the indices of the cars in the 60-car exact
+    SAT constellation to be used. The "Test Indices" lists the test index from
+    the original test rules list to be performed. These two data fields
+    represent the complete state space of the scheduling solutions.
