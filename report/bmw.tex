@@ -103,6 +103,17 @@ Additionally, the scheduling problem of (3) was not solvable:
 ``[O]n the test laptop, the full problem with 700 tests wasn't solvable in less than 24
 hours.''
 
+\begin{figure*}[ht]
+\begin{center}
+\includegraphics[width=4in]{figures/solution.pdf}
+\caption{Characteristics of QC Ware solutions to the ``optimizing the production
+of test vehicles'' challenge problem. (A) Solutions to the MAX-SAT, and by
+corollary, SAT variants of problem variants (2) and (1), respectively. (B)
+Solution to the scheduling problem variant (3).}
+\label{fig:solution}
+\end{center}
+\end{figure*}
+
 \textbf{We provide what we believe under the rules of the problem statement
 represents a complete and tangible solution to all three specified problems.}
 Specifically, we developed a custom C++/Python code library to represent the
@@ -205,7 +216,8 @@ respecting the hard constraints. The Monte Carlo moves are described below.
 that maximally increases the number of satisfied tests in the constellation.
 \item We update the test set used to direct the Monte Carlo moves in Step 1 to
 include only those rules which are unsatisfied by the current constellation.
-\item We iterate this procedure until all test rules are satisfied.
+\item We iterate this procedure until all test rules are satisfied, increasing
+the constellation size $n_{\mathrm{C}}$ by one test vehicle per iteration..
 \end{enumerate}
 At the end of this procedure, we have a set of $n_{\mathrm{C}}$ nested
 constellations each of which is a local approximant to the Max-SAT [Problem (2)]
@@ -263,7 +275,7 @@ anisotropic task sizes encountered.
 
 \subsection{Scheduling}
 
-For scheduling, we were initially considering doing some seriously exotic stuff
+For scheduling, we were initially considering doing some rather exotic work
 involving global optimization, i.e., building a different constellation of test
 vehicles that would be more optimized for the scheduling objective function than
 for the MAX-SAT objective fnction. However, we started by exploring an extremely

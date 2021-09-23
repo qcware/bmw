@@ -12,7 +12,6 @@ CXXFLAGS = \
     -fPIC \
     `python3 -m pybind11 --includes` \
     -O3 \
-    -fopenmp \
     -Wall \
     -Wuninitialized \
     -Wsign-compare \
@@ -23,7 +22,6 @@ INCLUDES = \
 LIBRARIES = \
 
 LDFLAGS = \
-    -fopenmp   
 
 # Used to determine linking flags.
 UNAME = $(shell uname)
