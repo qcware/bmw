@@ -1,2 +1,5 @@
 #!/usr/bin/env tcsh
 pdflatex bmw
+bibtex bmw
+pdflatex bmw
+pdflatex bmw
