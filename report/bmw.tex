@@ -4,8 +4,10 @@
 %\documentclass[jctcce,letterpaper,twocolumn,floatfix,preprintnumbers,superscriptaddress]{revtex4}
 % \documentclass[12pt,preprint,aps,prb]{revtex4}
 % \documentclass[aps,preprint,showpacs,superscriptaddress,groupedaddress]{revtex4}  % for double-spaced preprint
-\documentclass[aps,prl,twocolumn,superscriptaddress,groupedaddress]{revtex4}  % for review and submission
+\documentclass[aps,pra,twocolumn,superscriptaddress,groupedaddress]{revtex4}  % for review and submission
 \usepackage{dcolumn,graphicx,amsmath,amssymb,algorithm,algpseudocode}
+\usepackage{mathtools}
+\usepackage{xcolor}
 \usepackage{todonotes}
 \usepackage{qcircuit}
 
@@ -19,6 +21,8 @@
 \begin{document}
 
 \definecolor{brickred}{rgb}{.72,0,0} 
+\definecolor{darkblue}{rgb}{0,0,0.5} 
+\definecolor{darkgreen}{rgb}{0,0.5,0} 
 
 \title{
 BMW Quantum Challenge: Optimizing the Production of Test Vehicles
@@ -84,38 +88,45 @@ with definite sorting of test groups within each car?
 A specific instance of the problem class described above was provided by BMW.
 Taken naively, this problem instance involves binary optimization over a state
 space of $\sim 469\times60 = 28140$ binary variables (plus additional state
-space variables for scheduling) with hard constraints and fairly generic logical
+space variables for scheduling), i.e., a state space of $2^{28140} \sim
+10^{6574}$ dimensions, with hard constraints and fairly generic logical
 expressions needed to specify constraints and objective function values.  As
-stated by BMW: ``The provided description is based on the actual numbers and
-constraints formulated for this model. It, thus, represents the real complexity
-arising in a productive setting.''
+stated by BMW (quotes from the problem statement in italics): ``\textit{The
+provided description is based on the actual numbers and constraints formulated
+for this model. It, thus, represents the real complexity arising in a productive
+setting.}''
 
 Within the problem statement document, solutions to the above problems were
-attempted using existing industry-standard sat solvers and constraint
+attempted using existing industry-standard SAT solvers and constraint
 satisfaction solvers. The SAT problem of (1) was easily solved:
-``For 100 cars, the problem can be solved in a few seconds. A linear search counting down
+``\textit{For 100 cars, the problem can be solved in a few seconds. A linear search counting down
 from 100 revealed the solution that at least 60 cars are needed to perform all the specified
-750 tests.''
+750 tests.}''
 However the weighted MAX-SAT problem of (2) was not solvable:
-``On the other hand, the MAX-SAT problem was not solvable in a reasonable time with the
-chosen approach.''
+``\textit{On the other hand, the MAX-SAT problem was not solvable in a reasonable time with the
+chosen approach.}''
 Additionally, the scheduling problem of (3) was not solvable:
-``[O]n the test laptop, the full problem with 700 tests wasn't solvable in less than 24
-hours.''
+``\textit{[O]n the test laptop, the full problem with 700 tests wasn't solvable in less than 24
+hours.}''
 
 \begin{figure*}[ht]
 \begin{center}
 \includegraphics[width=4in]{figures/solution.pdf}
 \caption{Characteristics of QC Ware solutions to the ``optimizing the production
-of test vehicles'' challenge problem. (A) Solutions to the MAX-SAT, and by
-corollary, SAT variants of problem variants (2) and (1), respectively. (B)
-Solution to the scheduling problem variant (3).}
+of test vehicles'' BMW quantum computing challenge problem. (A) Solutions
+to the MAX-SAT, and by corollary, SAT variants of problem variants (2) and (1),
+respectively. (B) Solution to the scheduling problem variant (3).}
 \label{fig:solution}
 \end{center}
 \end{figure*}
 
 \textbf{We provide what we believe under the rules of the problem statement
-represents a complete and tangible solution to all three specified problems.}
+represents a complete and tangible classical solution to all three specified
+problem variants.} 
+The characteristics of our solution are presented in Figure \ref{fig:solution}
+and the tangible solutions and concomitant code are present in our
+publically-available repository at
+\href{https://github.com/qcware/bmw}{https://github.com/qcware/bmw}.
 Specifically, we developed a custom C++/Python code library to represent the
 details of the problem in a natural format. 
 The combination of customized classical solution environment and high
@@ -140,7 +151,10 @@ multiplicity considerations of each test. With the multiplicity considerations
 included, there are 766 separate test-car pairs required, mandating a
 theoretical floor of 77 test slots. Our heuristic solution provides a nearly
 dense scheduling with 78 test slots required, i.e., within 1.3$\%$ of dense
-scheduling.
+scheduling. In aggregate, the classical steps required to reach the
+MAX-SAT/SAT/Scheduling solutions sum to roughly $5-10$ min total of wall time on
+a 72-core AWS EC2 \texttt{c5n.metal} instance, representing $\sim \$0.30$ worth
+of classical computing resources at present prices.
 
 \section{Methods}
 
@@ -167,7 +181,7 @@ feature groups, the type-specific build rules, the full set of test rules and
 corresponding multiplicities, eventually yielding a complete C++ representation
 of the full problem. The critical configuration state space of each test vehicle
 is efficiently represented by the \texttt{std::vector<bool>} concept, i.e., each
-proposed test vehicle is represented by a std::vector<bool> containing the
+proposed test vehicle is represented by a \texttt{std::vector<bool>} containing the
 states of the $\sim 469$ features of each vehicle.
  The entire library is reflexively exposed to Python3 through PyBind11 to merge
 the effortless development of Python (i.e., regex for data parsing, short python
@@ -200,10 +214,10 @@ select another type and repeat ad inifitum.
 At the end of this procedure we have a pool of $\sim 644$ test vehicles which
 are largely ``featureless'' meaning that only the minimal number of features
 have been activated to satisfy the test and chase the constraints into the valid
-type build rule space. All tests are present in at least one vehicle in this
+type build rule space. All test rules are present in at least one test vehicle in this
 starting pool.
 
-\subsection{Max-SAT Optimization}
+\subsection{MAX-SAT Optimization}
 
 We start from the empty constellation $n_{\mathrm{C}} = 0$. To update this
 constellation to $n_{\mathrm{C}} = 1$, we adopt the following procedure:
@@ -217,10 +231,10 @@ that maximally increases the number of satisfied tests in the constellation.
 \item We update the test set used to direct the Monte Carlo moves in Step 1 to
 include only those rules which are unsatisfied by the current constellation.
 \item We iterate this procedure until all test rules are satisfied, increasing
-the constellation size $n_{\mathrm{C}}$ by one test vehicle per iteration..
+the constellation size $n_{\mathrm{C}}$ by one test vehicle per iteration.
 \end{enumerate}
 At the end of this procedure, we have a set of $n_{\mathrm{C}}$ nested
-constellations each of which is a local approximant to the Max-SAT [Problem (2)]
+constellations each of which is a local approximant to the MAX-SAT [Problem (2)]
 solution of corresponding constellation size. Once we obtain a constellation
 that saturates all tests, we have an upper bound for the SAT solution [Problem
 (1)] which turns out to be tight for the specifics of this problem instance.
@@ -278,13 +292,13 @@ anisotropic task sizes encountered.
 For scheduling, we were initially considering doing some rather exotic work
 involving global optimization, i.e., building a different constellation of test
 vehicles that would be more optimized for the scheduling objective function than
-for the MAX-SAT objective fnction. However, we started by exploring an extremely
+for the MAX-SAT objective function. However, we started by exploring an extremely
 simple greedy approach involving attempting to schedule our existing SAT/MAX-SAT
 constellation of $n_{\mathrm{C}} = 60$ test vehicles, and found that it produced
 almost dense packing. Therefore, we will only explain the latter approach here. 
 
 The scheduling heuristic approach works as follows:
-\begin{itemize}
+\begin{enumerate}
 \item We first sort the test rules by test group (first priority) and by
 number of required cars for the test (second priority).
 \item We traverse the current priority-sorted test set.
@@ -304,7 +318,7 @@ the slot onto the schedule.
 test rule set to remove this rule if so.
 \item We iterate from 2 until all test rules are satisfied, as evidenced by the
 active test set becoming empty.
-\end{itemize}
+\end{enumerate}
 
 There is a small chance that this algorithm will enter an infinite loop where a
 critical car is greedily used for a lower-priority test, and therefore cannot be
@@ -316,11 +330,461 @@ Note that we find the absence of specified test groups in the problem
 specification to be a major weakness of this part of the challenge. We generated
 test groups ranging from 1 to 5 from random integers as sketched in the problem
 statement. We did this exactly once using \texttt{numpy.random.randint} and
-stored the values in our github repository - i.e,. we generated what we feel is
+stored the values in our github repository - i.e., we generated what we feel is
 a fair test and then froze it. Note also that we elected to define the priority
 order to be sorted from $1$ to $5$ rather than from $5$ to $1$ in the problem
 statement for aesthetic reasons - as these values are randomly generated this
 makes no difference in problem structure.
+
+\section{Toward Hybrid Quantum/Classical Approaches}
+
+\subsection{Motivation}
+
+We view the above highly efficient and nontrivial solutions as an unexpected
+\emph{fait accompli} obtained during our formulation of a submission for this
+challenge. Despite the apparent hardness of
+this problem [as evidenced by the inability of the BMW working group to provide
+a solution for problem variants (2) and (3) with conventional techniques], this
+problem is not so hard as it looks. In particular, there seems to be only a
+modest amount of ``geometric frustration'' between test vehicles. This concept
+of geometric frustration has many potential manifestitions, all boiling down to
+the basic idea that local moves to optimize one subset of the problem could
+easily have severely penalized the quality of the global solution. For instance,
+focusing on MAX-SAT, it could well have been the case that feature choices on
+candidate test vehicles were so tightly correlated through test case
+satisfaction that attempts to locally maximize the solution quality for each
+proposed single test vehicle addition to the constellation would severely negatively
+impact the MAX-SAT score for larger values of constellation size
+$n_{\mathrm{C}}$. This might manifest as a problem instance where no single test
+vehicle in the ideal global solution constellation is a ``hero'' individually
+satisfying a relatively large number of tests (note that all of our current
+solution test vehicles are heros!). Instead each test vehicle in the ideal
+solution constellation might satisfy only something on the order of
+$n_{\mathrm{test}} / n_{\mathrm{C}}$ cars, with the particular test cluster
+satisfied for by each test vehicle determined by a very brittle set of many-body
+correlations with the active features sets across all test vehicles in the
+constellation. Such a case would stymie essentially all heuristic optimization
+approaches that we can imagine.
+
+A geometrically frustrated problem instance of this type is not hard to imagine
+occuring in real engineering practice. In fact, we would argue that such
+geometric frustration is already present in the current problem instance, albeit
+to a low enough degree that some clever heuristics and the big hammer of a
+\texttt{c5n.metal} node can defeat such geometric frustration.  In particular,
+as the feature groups, build rules, and test sets all grow in both size and
+complexity in future practice at BMW, we will likely see cases that are highly
+resilient to direct solution by local heuristics.
+
+Below, we propose a specific directed research project to develop novel hybrid
+quantum/classical algorithms to target such frustrated MAX-SAT problems. Key to
+our approach is the idea that one should use the CPU (or other high-performance
+classical computing resources) and QPU separately for what each are best at. As
+such, we propose a two-stage approach where one first uses the CPU to generate a
+large, diverse, and structured candidate pool of cars (dealing with the hard
+build constraints on the cars on the CPU) and then selecting the best
+constellation of $n_{C}$ test cars from this pool by using the QPU to solve a
+variant of MAX-COVER. This variant of MAX-COVER is an interesting and
+non-trivial extension of standard MAX-COVER that represents a total
+Hamming-weight-constrained polynomial binary optimization problem (a specific
+PCBO problem). 
+
+Before discussing the proposed approach, we will briefly discuss a red herring
+approach that will serve to contrast with our selected approach:
+
+\subsection{A Path to Avoid}
+
+It is highly tempting to map the binary state space of the MAX-SAT variant of
+the problem to the qubits or qudits of a quantum device. This mapping would
+provide the most natural representation of the problem on the quantum hardware
+and would retain the conceptually sacred possibility of an exact global optimum.
+Conceptually, one would create a quantum superposition over all possible binary
+strings in the state space, and then start applying MAX-SAT-Hamiltonian-aware
+methods like quantum amplitude amplification (using either traditional deep
+quantum phase estimation circuits or a variant of the new short-depth maximum
+likelihood estimation, Grover zeroing, or Chinese remainder theorem circuit
+schedules), QAOA, or VQE to boost the observation probability of the global
+optimum or other local optima. One could immediately improve this idea by either
+conceptually or physically using qudits to represent each feature group - this
+would drastically reduce the search space size and simultaneously mitigate
+issues with the feature group constraints.
+
+We do not recommend pursuing any approach along these lines for exactly one reason:
+test vehicle build constraints. These constraints severely limit the valid state
+space of the test vehicles and are posed as generic predicate/implication binary
+logic statements involving up to dozens of simultaneous variables per expression. Such
+constraints are completely alien in a quantum computing context, in the same way
+that mapping a deeply serial code to a GPU is a technical non-starter.
+Therefore, we see no viable path (even for error correctedquantum  approaches in
+the $\geq$decade timeframe) to develop general purpose quantum circuits that can
+provide powerful moves within the Hilbert space while simultaneously respecting
+these generic build rules.
+
+\subsection{A Path to Take}
+
+We propose a hybrid quantum/classical approach to the geometrically frustrated MAX-SAT
+problem. The approach works as follows:
+\begin{enumerate}
+\item Use classical high performance computing resources such as extensions of
+our existing methodology to build a large, diverse, and highly structured pool
+of $10^{2}$ to $10^{6}$ candidate test vehicles. This pool generation approach
+can be tuned for various frustration cases, e.g., providing penalties for
+``hero'' test vehicles, providing repulsive terms between test vehicles with overlapping
+feature sets, or encouraging small groups of test vehicles to work together to
+realize tests with high multiplicities.
+\item Use novel symmetry-preserving constrained binary optimization optimization
+approaches on quantum hardware to solve the modified MAX-COVER problem of
+selecting the optimal constellation of $n_{C}$ test vehicles from the candidate
+pool. 
+\item Perform additional heuristic refinement on classical resources to further
+increase the MAX-SAT score.
+\end{enumerate}
+
+\subsection{The Quantum Problem}
+
+The modified MAX-COVER problem that represents the basic task of the quantum
+hardware in our hybrid method has the following two compelling features: (1) the
+problem maps much more naturally to a qubit device than the approach discarded
+in the previous section and (2) the problem has an extremely interesting global
+Hamming weight constraint structure that merits additional quantum algorithm
+development, i.e., there is something new, tangible, and valuable to be done
+here on the quantum algorithms research side. 
+
+Specifically, we have a binary state space of $n_{P}$ binary variables, where
+$n_{P} \sim 10^{2} - 10^{6}$ is the number of test vehicles in the candidate
+pool. We are asked to produce a $n_{P}$-dimensional binary string with Hamming
+weight (total number of 1-state bits) $n_{C}$, where the $n_{C}$ 1-state bits
+identify the pivots of the test pool to place into the test constellation. This
+binary string is to be optimized to maximize the number of satisfied test cases
+in the constellation, including mutliplicity considerations. This last
+consideration generalizes the problem beyond standard MAX-COVER somewhat,
+implying some extensions to the Hamiltonian considerations that we will consider
+in future work. 
+
+The most interesting feature of the problem is the total Hamming weight
+constraint. This formally reduces the dimension of the search space from
+$2^{n_{P}}$ to ${n_{P} \choose n_{C} }$, which is still a roughly exponentially
+large search space. Standard heuristics for MAX-COVER will likely fail in this
+environment due to the same geometric frustration between choices that motivated
+our basic consideration of a hybrid quantum/classical algorithm. The challenge
+at this point is to craft a quantum optimization algorithm that respects the
+hard Hamming weight constraint while also providing strong optimization power.
+Some existing approaches have discussed this case, such as a variant of the
+quantum alternating operator ansatz (QAOA) with ring or complete graph mixers,
+or the mixer-phaser ansatz for QAOA with hard Hamming constraints. Both of these
+methods share the common traits that they start from Dicke states (essentially
+the usual $|+\rangle$ state of equal amplitudes on all state space
+configurations, but restricted to preserve target Hamming weight), and then use
+arrays of 2-qubit XY mixer gates (similar to the ``reversible beamsplitter or RBS
+gates'' of quantum optics'' or the ``Givens gates'' of quantum chemistry) to
+provide Hamming-wight-preserving exploration through the Hilbert space during
+the QAOA optimization process. It might be possible to directly implement one of
+this existing methods to solve the MAX-COVER problem for our problem instance.
+However, we note that there exist several potential problems with these
+proposed ansatze. Most tangibly (1) it is well known that networks of Givens or
+similar gates do not provide full entangling power across the
+Hamming-weight-preserving Hilbert space, and therefore may not be able to
+provide quantum advantage when used as QAOA elements and (2) some of the most
+promising variants of the existing approaches, such as the complete graph XY
+mixers use highly nonlocal pairs of non-adjacent qubits that may be
+prohibitively difficult to implement on near-term quantum devices with limited
+qubit connectivity. We propose an avenue of research that goes somewhat beyond
+these existing methods, and that works to directly confront these two major
+issues: the adoption of universal Hamming-weight-preserving gate fabrics into an
+extended version of QAOA or VQE that can provide full universality within the
+Hamming-weight-preserving subspace while simultaneously being amenable to
+implementation on NISQ-era quantum devices as a simple 3-local nearest-neighbor
+gate fabric.  
+
+These Hamming-weight-preserving quantum number gate fabrics were noticed as an
+aside during a collaborative effort between QC Ware Corp. and Covestro
+Deutschland AG to develop universal but simple gate fabric circuits for the
+simulation of fermions in the context of quantum chemistry. Fermions exhibit
+numerous symmetries which must be respected during quantum algorithms simulating
+these fermions, and one of these symmetries in Hamming weight. Therefore, as an
+intermediate to full the full fermionic gates that were the major finding of
+Ref. X, we considered the prerequisite question of the minimal circuit that is
+universal for total Hamming weight while also preserving a simblence of
+simplicity and linear locality. As is well-known in the literature, we noted
+that the two-qubit fabric of Givens gates as in Figure \ref{fig:H1} (similar to
+the XY mixers discussed above) are not universal, but an extension of this
+concept to a local fabric of three-qubit Hamming-weight-preserving gates as
+depicted in Figure \ref{fig:H2} acheives universality while preserving the
+global Hamming weight constraint. 
+
+\begin{figure}[b]
+\centering
+\begin{equation*}
+\begin{array}{l}
+\Qcircuit @R=0.3em @C=0.3em @!R {
+% \lstick{|0\rangle}
+ & \multigate{1}{\mathit{H}(4)}
+ & \qw
+ & \multigate{1}{\mathit{H}(4)}
+ & \qw
+ & \qw \\
+% \lstick{|1\rangle}
+ & \ghost{\mathit{H}(4)}
+ & \multigate{1}{\mathit{H}(4)}
+ & \ghost{\mathit{H}(4)}
+ & \multigate{1}{\mathit{H}(4)}
+ & \qw \\
+% \lstick{|2\rangle}
+ & \multigate{1}{\mathit{H}(4)}
+ & \ghost{\mathit{H}(4)}
+ & \multigate{1}{\mathit{H}(4)}
+ & \ghost{\mathit{H}(4)}
+ & \qw \\
+% \lstick{|3\rangle}
+ & \ghost{\mathit{H}(4)}
+ & \multigate{1}{\mathit{H}(4)}
+ & \ghost{\mathit{H}(4)}
+ & \multigate{1}{\mathit{H}(4)}
+ & \qw \\
+% \lstick{|4\rangle}
+ & \multigate{1}{\mathit{H}(4)}
+ & \ghost{\mathit{H}(4)}
+ & \multigate{1}{\mathit{H}(4)}
+ & \ghost{\mathit{H}(4)}
+ & \qw \\
+% \lstick{|5\rangle}
+ & \ghost{\mathit{H}(4)}
+ & \qw
+ & \ghost{\mathit{H}(4)}
+ & \qw
+ & \qw \\
+}
+\end{array}
+\ldots
+\phantom{}
+\not\cong
+\phantom{}
+\begin{array}{l}
+\Qcircuit @R=0.3em @C=0.3em @!R {
+% \lstick{|0\rangle}
+ & \multigate{5}{\mathit{H}(2^6)}
+ & \qw \\
+% \lstick{|0\rangle}
+ & \ghost{\mathit{H}(2^6)}
+ & \qw \\
+% \lstick{|0\rangle}
+ & \ghost{\mathit{H}(2^6)}
+ & \qw \\
+% \lstick{|0\rangle}
+ & \ghost{\mathit{H}(2^6)}
+ & \qw \\
+% \lstick{|0\rangle}
+ & \ghost{\mathit{H}(2^6)}
+ & \qw \\
+% \lstick{|0\rangle}
+ & \ghost{\mathit{H}(2^6)}
+ & \qw \\
+}
+\end{array}
+\end{equation*}
+\begin{equation*}
+\begin{array}{l}
+\Qcircuit @R=0.3em @C=0.3em @!R {
+ & \multigate{1}{H(4)}
+ & \qw \\
+ & \ghost{H(4)}
+ & \qw \\
+}
+\end{array}
+\coloneqq
+\begin{array}{l}
+\Qcircuit @R=0.3em @C=0.3em @!R {
+ & \gate{R_{y} (+\pi / 4)}
+ & \ctrl{1}
+ & \gate{R_{y} (+\lambda / 2)}
+ & \ctrl{1}
+ & \gate{R_{y} (-\pi / 4)}
+ & \qw \\
+ & \gate{R_{y} (+\pi / 4)}
+ & \ctrl{-1}
+ & \gate{R_{y} (-\lambda/2)}
+ & \ctrl{-1}
+ & \gate{R_{y} (-\pi / 4)}
+ & \qw \\
+}
+\end{array}
+\end{equation*}
+\begin{equation*}
+=
+\left [
+\begin{array}{rrrr}
+1 & & & \\
+ & c & +s & \\
+ & -s & c & \\
+ & & & 1 \\
+\end{array}
+\right ]
+:
+\
+\begin{array}{l}
+c \coloneqq \cos(\lambda/2)
+\\
+s \coloneqq \sin(\lambda/2)
+\\
+\end{array}
+\end{equation*}
+\caption{From Ref. X: Gate fabric attempt \emph{not} universal for the
+Hamming-weight-preserving subgroup $\mathcal{H}(2^N)$ (sketched for $N=6)$.  The
+gate fabric is a 2-local-nearest-neighbor tessellation of alternating even and
+odd qubit-pair 1-parameter, 2-qubit Hamming-weight-preserving $\hat H(4)$ gates.
+The gate fabric exactly commutes with the Hamming weight operator $\hat P \equiv
+\sum_{p} (\hat I - \hat Z_p) / 2$, but the gate fabric does not span
+$\mathcal{H}(2^N)$ for any depth.
+}
+\label{fig:H1}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{equation*}
+\label{eq:SO2N-Hamming}
+\begin{array}{l}
+\Qcircuit @R=0.3em @C=0.3em @!R {
+% \lstick{|0\rangle}
+ & \multigate{2}{\mathit{H}(8)}
+ & \qw 
+ & \qw 
+ & \qw 
+ & \qw \\
+% \lstick{|1\rangle}
+ & \ghost{\mathit{H}(8)}
+ & \multigate{2}{\mathit{H}(8)}
+ & \qw 
+ & \qw \\
+% \lstick{|2\rangle}
+ & \ghost{\mathit{H}(8)}
+ & \ghost{\mathit{H}(8)}
+ & \multigate{2}{\mathit{H}(8)}
+ & \qw \\
+% \lstick{|0\rangle}
+ & \multigate{2}{\mathit{H}(8)}
+ & \ghost{\mathit{H}(8)}
+ & \ghost{\mathit{H}(8)}
+ & \qw \\
+% \lstick{|1\rangle}
+ & \ghost{\mathit{H}(8)}
+ & \multigate{2}{\mathit{H}(8)}
+ & \ghost{\mathit{H}(8)}
+ & \qw \\
+% \lstick{|2\rangle}
+ & \ghost{\mathit{H}(8)}
+ & \ghost{\mathit{H}(8)}
+ & \multigate{2}{\mathit{H}(8)}
+ & \qw \\
+% \lstick{|0\rangle}
+ & \multigate{2}{\mathit{H}(8)}
+ & \ghost{\mathit{H}(8)}
+ & \ghost{\mathit{H}(8)}
+ & \qw \\
+% \lstick{|1\rangle}
+ & \ghost{\mathit{H}(8)}
+ & \qw 
+ & \ghost{\mathit{H}(8)}
+ & \qw \\
+% \lstick{|2\rangle}
+ & \ghost{\mathit{H}(8)}
+ & \qw 
+ & \qw 
+ & \qw \\
+}
+\end{array}
+\phantom{}
+\ldots
+\cong
+\phantom{}
+\begin{array}{l}
+\Qcircuit @R=0.3em @C=0.3em @!R {
+% \lstick{|0\rangle}
+ & \multigate{8}{\mathit{H}(2^9)}
+ & \qw \\
+ & \ghost{\mathit{H}(2^9)}
+ & \qw \\
+ & \ghost{\mathit{H}(2^9)}
+ & \qw \\
+ & \ghost{\mathit{H}(2^9)}
+ & \qw \\
+ & \ghost{\mathit{H}(2^9)}
+ & \qw \\
+ & \ghost{\mathit{H}(2^9)}
+ & \qw \\
+ & \ghost{\mathit{H}(2^9)}
+ & \qw \\
+ & \ghost{\mathit{H}(2^9)}
+ & \qw \\
+ & \ghost{\mathit{H}(2^9)}
+ & \qw \\
+}
+\end{array}
+\end{equation*}
+\begin{equation*}
+\mathit{H} (8)
+\coloneqq
+\left [
+\begin{array}{rrrrrrrrr}
+1 & & & & & & & & \\
+ & \color{brickred}{u_{00}^{1}} & \color{brickred}{u_{01}^{1}} & &
+\color{brickred}{u_{02}^{1}} & & & & \\
+ & \color{brickred}{u_{10}^{1}} & \color{brickred}{u_{11}^{1}} & &
+\color{brickred}{u_{12}^{1}} & & & & \\
+ & & & \color{darkblue}{u_{00}^{2}} & & \color{darkblue}{u_{01}^{2}} &
+\color{darkblue}{u_{02}^{2}} & \\
+ & \color{brickred}{u_{20}^{1}} & \color{brickred}{u_{21}^{1}} & &
+\color{brickred}{u_{22}^{1}} & & & & \\
+ & & & \color{darkblue}{u_{10}^{2}} & & \color{darkblue}{u_{11}^{2}} &
+\color{darkblue}{u_{12}^{2}} & \\
+ & & & \color{darkblue}{u_{20}^{2}} & & \color{darkblue}{u_{21}^{2}} &
+\color{darkblue}{u_{22}^{2}} & \\
+& & & & & & & & 1 \\
+\end{array}
+\right ]
+\end{equation*}
+\begin{equation*}
+\hat u^{d}
+\coloneqq
+\exp(\hat x^{d})
+\in 
+\mathcal{SO}(3)
+:
+\
+\hat x^{d\dagger}
+=
+-
+\hat x^{d}
+:
+\hat x^{d}
+\in
+\mathbb{R}^3
+\times
+\mathbb{R}^3
+, 
+\
+d \in [1, 2]
+\end{equation*}
+\caption{From Ref. X: Gate fabric  universal for the Hamming-weight-preserving subgroup
+$\mathcal{H}(2^N)$ (sketched for $N=9)$.  The gate fabric is a
+3-local-nearest-neighbor tessellation of cascading qubit-triple 6-parameter,
+3-qubit Hamming-weight-preserving $\hat H(8)$ gates. Each $\hat H(8)$ gate is
+composed of a 3-parameter $\mathcal{SO}(3)$ rotation in the $d$-Hamming-weight
+subspace, where $d \in [1, 2]$ for a total of 6 parameters. The gate fabric exactly
+commutes with the Hamming weight operator $\hat P \equiv \sum_{p} (\hat I - \hat
+Z_p) / 2$ and spans $\mathcal{H}(2^N)$ at sufficient depth.
+}
+\label{fig:H2}
+\end{figure}
+
+A tangible and potentially highly valuable research direction is to build an
+extension of QAOA or VQE built around these three-qubit quantum number
+preserving gates to address the MAX-COVER problem needed for our hybrid
+quantum/classical solution to the geoemtrically frustrated test vehicle
+production MAX-SAT problem. 
+
+\appendix
+\newpage
+\clearpage
 
 \subsection{Feature Groups Collision Issue}
 
@@ -375,7 +839,62 @@ large relative to the the intersection. In future, it is recommended that
 collisions between feature groups be avoided at all costs in the formulation of
 this problem, insofar as is possible.
 
+\subsection{Solution Verification}
 
+A standalone Python code was used to verify that the solutions reported satisfy
+both the buildability and test constraints.
+
+The MAX-SAT heuristic produced a constellation of test vehicles with specifed
+active features. The test vehicles must comply with a set of buildability
+constraints related 1) vehicle type, 2) feature group exclusivity, and
+3) configuration rules.
+
+Each vehicle can be one of 25 types, which dictates allowed features. 
+The type rules were sorted in a (\textit{number of types} $\times$
+\textit{number of available features}) boolean array, with allowed features set
+to True. For each vehicle in the solution constellation, if a feature was True,
+it was compared to the allowed features for that vehicle type to assert that the
+vehicle met type rules.
+
+The feature groups constraints consist of 42 feature groups, which contain a set
+of mutally exclusive features. For each test vehicle, one feature in the group can
+be true. The feature groups were sorted in a (\textit{number of groups} $\times$
+\textit{number of available features}) boolean array with each feature in the group
+set to True. For each test vehicle, if a feature was True, the feature group for
+which that feature was present was found and the bitwise AND was taken between
+these two arrays, returning one True value if satisfied.
+
+The set of test vehicles must also satisfy the configuration constraints. For a
+given test vehicle type, a set of features is either forced and/ or forbidden
+based on the presence and absense of specific features. There are 4032
+configuration constraints in the problem. Each configuration rule was separated
+into an initial condition and a forced implication. Theses were further reduced
+to 'on' sets, 'off' sets, and sets where 'any' one feature can be true, all of
+which were stored as True in boolean arrays. For each test vehicle, the
+configuration rules associated with the vehicle type were evaulated. First the 
+initial condition then forced implication was checked, in the same procedure
+outlined below. 1) If the rule had a set of 'on' features, the logical AND of
+the test vehicle features and 'on' features rule was computed. The number of
+True values in the resultant array should equal those in the 'on' features array
+if satisfied. 2) If the rule had a set of 'off' features, the array of features
+for the test vehicle was inverted, so that 'off' features were set to True. Then
+the logical AND was computed, which should have the same number of True elements
+as the 'off' features array if satisfied. 3) If the rule had an 'any' set, where
+one of the features must be true, the AND was taken between the 'any' features
+array and the test vehicle features, which should return one True value.
+
+For the scheduling solution, we verified that the results obey the scheduling
+rules. The scheduling rules stipulate that there are up to 10 tests per day and
+that each vehicle can undergo one test per day. We check that for each test day,
+each vehicle index appears once. Next, each test is ranked in a group, and for
+each test vehicle, it must undergo tests in order according to the test ranking.
+To test that this condition is satisfied, we sort through the group rank of each
+test vehicle. If a group index is out of order, we find which vehicle is in that
+slot, and trace back all previous tests that the vehicle underwent. If the tests
+for that specific vehicle are in order of ranking, the test set satisfies the test
+group rank rules. Finally, each test requires a certain number of test vehicles.
+For each test, we find and count all occurences of that specific test and compare
+it to number required for a test. 
 % \bibliography{jrncodes.bib,refs.bib}
 % \bibliographystyle{aip}
 

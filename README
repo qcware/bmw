@@ -1,7 +1,7 @@
 prompt - PDF of use case problem statement BMW
 data - test problem data from BMW (refined for easy parsing)
 bmw - main C++/Python library source code. After building and placing the repo
-    dir in your PYTHONPATH, python -c 'import bmw_plugin'` should work
+    dir in your PYTHONPATH, python -c 'import bmw'` should work
 env - simple environment shell scripts to add bmw to PYTHONPATH
 prod-1 - first production run of test case
 notes - working notes on observations of problems
