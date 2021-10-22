@@ -1,4 +1,8 @@
-prompt - PDF of use case problem statement BMW
+QC Ware code and solutions repository for efforts related to the "Optimizing the 
+Production of Test Vehicles" challenge problem of the 
+BMW Quantum Computing Challenge
+
+prompt - PDF of use case problem statement from BMW
 data - test problem data from BMW (refined for easy parsing)
 bmw - main C++/Python library source code. After building and placing the repo
     dir in your PYTHONPATH, python -c 'import bmw'` should work
