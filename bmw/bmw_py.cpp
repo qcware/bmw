@@ -102,7 +102,7 @@ py::class_<RandomStateGenerator>(m, "RandomStateGenerator")
 .def("generate_random", &RandomStateGenerator::generate_random, "type"_a)
 .def("generate_random_valid", &RandomStateGenerator::generate_random_valid, "type"_a, "niteration"_a=1)
 .def("leapfrog_distance_2", &RandomStateGenerator::leapfrog_distance_2, "state"_a, "type_specification"_a, "test_set"_a, "niteration"_a)
-.def("leapfrog_distance_2_mask", &RandomStateGenerator::leapfrog_distance_2_mask, "state"_a, "type_specification"_a, "test_set"_a, "niteration"_a, "mask"_a)
+.def("leapfrog_distance_2_mask", &RandomStateGenerator::leapfrog_distance_2_mask, "state"_a, "type_specification"_a, "test_set"_a, "niteration"_a, "mask"_a, "max_nfeature"_a=0)
 .def("improve_constellation", &RandomStateGenerator::improve_constellation, "constellation"_a, "constellation_types"_a, "problem"_a, "niteration"_a)
 ;
 
@@ -112,7 +112,7 @@ py::class_<ThreadedRandomStateGenerator>(m, "ThreadedRandomStateGenerator")
 .def_static("omp_get_max_threads", &ThreadedRandomStateGenerator::omp_get_max_threads)
 .def_property("nthread", &ThreadedRandomStateGenerator::nthread, nullptr)
 .def_property("generators", &ThreadedRandomStateGenerator::generators, nullptr)
-.def("leapfrog_distance_2_mask", &ThreadedRandomStateGenerator::leapfrog_distance_2_mask, "states"_a, "type_specifications"_a, "test_set"_a, "niteration"_a, "masks"_a)
+.def("leapfrog_distance_2_mask", &ThreadedRandomStateGenerator::leapfrog_distance_2_mask, "states"_a, "type_specifications"_a, "test_set"_a, "niteration"_a, "masks"_a, "max_nfeature"_a=0)
 ;
 
 py::class_<HammingStateGenerator>(m, "HammingStateGenerator")

@@ -48,7 +48,8 @@ std::vector<std::vector<bool>> leapfrog_distance_2_mask(
     const std::vector<TypeSpecification>& type_specifications,
     const TestSet& test_set,
     size_t niteration,
-    const std::vector<std::vector<bool>>& masks)
+    const std::vector<std::vector<bool>>& masks, 
+    size_t max_nfeature=0)
 {
     if (states.size() != type_specifications.size()) throw std::runtime_error("states.size != type_specifications.size");
     if (states.size() != masks.size()) throw std::runtime_error("states.size != masks.size");
@@ -66,7 +67,8 @@ std::vector<std::vector<bool>> leapfrog_distance_2_mask(
             type_specifications[index],
             test_set,
             niteration,
-            masks[index]);
+            masks[index],
+            max_nfeature);
     }
     
     return results;

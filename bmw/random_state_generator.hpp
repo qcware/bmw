@@ -4,6 +4,7 @@
 
 #include <random>
 #include <vector>
+#include <numeric>
 
 namespace bmw {
 
@@ -120,8 +121,15 @@ std::vector<bool> leapfrog_distance_2_mask(
     const TypeSpecification& type_specification,
     const TestSet& test_set,
     size_t niteration,
-    const std::vector<bool>& mask)
+    const std::vector<bool>& mask,
+    size_t max_nfeature=0)
 {
+    if (max_nfeature == 0) {
+        max_nfeature = state.size();
+    }
+
+    if (std::accumulate(state.begin(), state.end(), static_cast<size_t>(0)) > max_nfeature) throw std::runtime_error("state has too many features");
+
     if (!type_specification.check_valid(state)) throw std::runtime_error("state is not valid");
     if (mask.size() != state.size()) throw std::runtime_error("mask is wrong size");
 
@@ -176,6 +184,8 @@ std::vector<bool> leapfrog_distance_2_mask(
         } 
                  
         if (!type_specification.check_rules(trial)) continue;
+
+        if (std::accumulate(state.begin(), state.end(), static_cast<size_t>(0)) > max_nfeature) continue;
         
         size_t npass2 = test_set.npass_state(trial);
         
