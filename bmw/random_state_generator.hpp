@@ -185,7 +185,7 @@ std::vector<bool> leapfrog_distance_2_mask(
                  
         if (!type_specification.check_rules(trial)) continue;
 
-        if (std::accumulate(state.begin(), state.end(), static_cast<size_t>(0)) > max_nfeature) continue;
+        if (std::accumulate(trial.begin(), trial.end(), static_cast<size_t>(0)) > max_nfeature) continue;
         
         size_t npass2 = test_set.npass_state(trial);
         

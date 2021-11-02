@@ -1,0 +1,10 @@
+python -u test.py 0 >& test-0.log
+python -u test.py 1 >& test-1.log
+python -u test.py 2 >& test-2.log
+python -u test.py 3 >& test-3.log
+python -u test.py 4 >& test-4.log
+python -u test.py 5 >& test-5.log
+python -u test.py 6 >& test-6.log
+python -u test.py 7 >& test-7.log
+python -u test.py 8 >& test-8.log
+python -u test.py 9 >& test-9.log
