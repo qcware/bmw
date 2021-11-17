@@ -1,5 +1,7 @@
 import numpy as np
 
+np.set_printoptions(threshold=np.inf)
+
 dat = np.load('test-0.npz')
 constellation = dat['constellation']
 constellation_type_indices = dat['constellation_type_indices']
@@ -101,7 +103,6 @@ with open('../../data/2-polished/rules.txt') as f:
             print('line does not contain implication')
         rule_index += 1
 
-
 for sol_car_i in range(len(constellation)):
     sol_car_type = constellation_type_indices[sol_car_i]
     for k in range(len(constellation[0])):
@@ -125,6 +126,7 @@ for sol_car_i in range(len(constellation)):
     sol_car_type = constellation_type_indices[sol_car_i]
     for rule_i in range(len(dat_rule_type)):
         rule_i_type = dat_rule_type[rule_i]
+        print('rule type' , rule_i_type)
         if sol_car_type == rule_i_type:
             cond_num_on = sum(dat_condition_forced_all_on[rule_i][:])
             cond_num_off = sum(dat_condition_forced_all_off[rule_i][:])
@@ -208,5 +210,12 @@ for sol_car_i in range(len(constellation)):
             # if (impl_num_on != 0 and impl_num_off == 0 and impl_num_any != 0):     # implication: on and any
             # if (impl_num_on == 0 and impl_num_off != 0 and impl_num_any != 0):     # implication: off and any
             # if (impl_num_on!= 0 and impl_num_off != 0 and impl_num_any != 0):      # implication and and off and any
+print(num_tests_passed)
+for cindex in range(len(num_tests_passed)):
+    if (num_tests_passed[cindex] == 0):
+        print('index          ' , cindex)
+        print('tests_passed   ' , num_tests_passed[cindex])
+        print('car type       ' , constellation_type_indices[cindex])
+
 assert np.count_nonzero(num_tests_passed) == len(constellation), 'Test car doesn\'t comply with rules.'
 
