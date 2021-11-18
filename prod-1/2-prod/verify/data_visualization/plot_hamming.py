@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-sol = np.load('../test-0.npz')
+sol = np.load('../../test-0.npz')
 constellation = sol['constellation']
 constellation_type_indices = sol['constellation_type_indices']
 
@@ -17,7 +17,7 @@ plt.rcParams.update({'font.size': 8})
 
 plt.clf()
 #plt.plot(x,y,'o', c='mediumblue', markersize=2)
-plt.bar(x,y)
+plt.bar(x,y,color='b')
 plt.axis([-1, 60, 50, 100])
 plt.yticks(np.arange(0, 100+1, 10))
 #axes=plt.gca()
