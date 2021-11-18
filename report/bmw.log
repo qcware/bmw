@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.9.23)  18 NOV 2021 13:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.9.23)  18 NOV 2021 14:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -851,32 +851,44 @@ nput line 773.
 LaTeX Warning: A float is stuck (cannot be placed); try class option [floatfix]
  on input line 782.
 
-<figures/phase2/2-prod-hamming.pdf, id=5189, 412.1849pt x 311.21375pt>
+<figures/phase2/2p-score.pdf, id=5189, 462.52798pt x 346.89601pt>
+File: figures/phase2/2p-score.pdf Graphic file (type pdf)
+<use figures/phase2/2p-score.pdf>
+Package pdftex.def Info: figures/phase2/2p-score.pdf  used on input line 787.
+(pdftex.def)             Requested size: 289.07999pt x 216.82005pt.
+<figures/phase2/2-prod-hamming.pdf, id=5190, 412.1849pt x 311.21375pt>
 File: figures/phase2/2-prod-hamming.pdf Graphic file (type pdf)
 <use figures/phase2/2-prod-hamming.pdf>
 Package pdftex.def Info: figures/phase2/2-prod-hamming.pdf  used on input line 
-790.
+798.
 (pdftex.def)             Requested size: 242.25311pt x 182.9117pt.
-<figures/phase2/2p-prod-hamming.pdf, id=5190, 407.07205pt x 311.21375pt>
+<figures/phase2/2p-prod-hamming.pdf, id=5191, 407.07205pt x 311.21375pt>
 File: figures/phase2/2p-prod-hamming.pdf Graphic file (type pdf)
 <use figures/phase2/2p-prod-hamming.pdf>
 Package pdftex.def Info: figures/phase2/2p-prod-hamming.pdf  used on input line
- 798.
+ 806.
 (pdftex.def)             Requested size: 242.25311pt x 185.21008pt.
-<figures/phase2/2-prod-rules.pdf, id=5191, 412.1849pt x 311.21375pt>
+<figures/phase2/2-prod-rules.pdf, id=5192, 412.1849pt x 311.21375pt>
 File: figures/phase2/2-prod-rules.pdf Graphic file (type pdf)
 <use figures/phase2/2-prod-rules.pdf>
-Package pdftex.def Info: figures/phase2/2-prod-rules.pdf  used on input line 80
-6.
+Package pdftex.def Info: figures/phase2/2-prod-rules.pdf  used on input line 81
+4.
 (pdftex.def)             Requested size: 242.25311pt x 182.9117pt.
-<figures/phase2/2p-prod-rules.pdf, id=5192, 407.07205pt x 311.21375pt>
+<figures/phase2/2p-prod-rules.pdf, id=5193, 407.07205pt x 311.21375pt>
 File: figures/phase2/2p-prod-rules.pdf Graphic file (type pdf)
 <use figures/phase2/2p-prod-rules.pdf>
 Package pdftex.def Info: figures/phase2/2p-prod-rules.pdf  used on input line 8
-14.
+22.
 (pdftex.def)             Requested size: 242.25311pt x 185.21008pt.
-[7] [8 <./figures/phase2/2-prod-hamming.pdf> <./figures/phase2/2p-prod-hamming.
-pdf
+[7] [8 <./figures/phase2/2p-score.pdf>]
+
+LaTeX Warning: A float is stuck (cannot be placed); try class option [floatfix]
+ on input line 837.
+
+
+Class revtex4 Warning: Deferred float stuck during \clearpage processing.
+
+[9 <./figures/phase2/2-prod-hamming.pdf> <./figures/phase2/2p-prod-hamming.pdf
 
 pdfTeX warning: pdflatex (file ./figures/phase2/2p-prod-hamming.pdf): PDF inclu
 sion: multiple pdfs with page group included in a single page
@@ -889,156 +901,160 @@ n: multiple pdfs with page group included in a single page
 pdfTeX warning: pdflatex (file ./figures/phase2/2p-prod-rules.pdf): PDF inclusi
 on: multiple pdfs with page group included in a single page
 >]
-Underfull \hbox (badness 1502) in paragraph at lines 840--843
+Underfull \hbox (badness 1502) in paragraph at lines 849--852
 []\OT1/cmr/m/n/10 Group 40 (28 el-e-ments): \OT1/cmtt/m/n/10 [245, 246, 247, 25
 0,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 840--843
+Underfull \hbox (badness 10000) in paragraph at lines 849--852
 \OT1/cmtt/m/n/10 251, 252, 253, 254, 255, 256, 266, 267, 268,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 840--843
+Underfull \hbox (badness 10000) in paragraph at lines 849--852
 \OT1/cmtt/m/n/10 269, 270, 271, 272, 273, 274, 275, 276, 277,
  []
 
 
-Underfull \hbox (badness 1502) in paragraph at lines 844--848
+Underfull \hbox (badness 1502) in paragraph at lines 853--857
 []\OT1/cmr/m/n/10 Group 41 (46 el-e-ments): \OT1/cmtt/m/n/10 [245, 246, 247, 24
 8,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 844--848
+Underfull \hbox (badness 10000) in paragraph at lines 853--857
 \OT1/cmtt/m/n/10 249, 250, 251, 252, 253, 254, 255, 256, 257,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 844--848
+Underfull \hbox (badness 10000) in paragraph at lines 853--857
 \OT1/cmtt/m/n/10 258, 259, 260, 261, 262, 263, 264, 267, 268,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 844--848
+Underfull \hbox (badness 10000) in paragraph at lines 853--857
 \OT1/cmtt/m/n/10 269, 270, 271, 272, 273, 274, 275, 276, 277,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 844--848
+Underfull \hbox (badness 10000) in paragraph at lines 853--857
 \OT1/cmtt/m/n/10 278, 279, 280, 281, 282, 283, 285, 286, 287,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 849--853
+Underfull \hbox (badness 10000) in paragraph at lines 858--862
 \OT1/cmtt/m/n/10 250, 251, 252, 253, 254, 255, 256, 257, 258,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 849--853
+Underfull \hbox (badness 10000) in paragraph at lines 858--862
 \OT1/cmtt/m/n/10 259, 260, 261, 262, 263, 264, 266, 267, 268,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 849--853
+Underfull \hbox (badness 10000) in paragraph at lines 858--862
 \OT1/cmtt/m/n/10 269, 270, 271, 272, 273, 274, 275, 276, 277,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 849--853
+Underfull \hbox (badness 10000) in paragraph at lines 858--862
 \OT1/cmtt/m/n/10 278, 279, 280, 281, 282, 283, 284, 285, 286,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 854--857
+Underfull \hbox (badness 10000) in paragraph at lines 863--866
 \OT1/cmtt/m/n/10 251, 252, 253, 254, 255, 256, 267, 268, 269,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 854--857
+Underfull \hbox (badness 10000) in paragraph at lines 863--866
 \OT1/cmtt/m/n/10 270, 271, 272, 273, 274, 275, 276, 277, 278,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 860--862
+Underfull \hbox (badness 10000) in paragraph at lines 869--871
 \OT1/cmtt/m/n/10 249, 257, 258, 259, 260, 261, 262, 263, 264,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 860--862
+Underfull \hbox (badness 10000) in paragraph at lines 869--871
 \OT1/cmtt/m/n/10 283, 285, 286, 287, 288, 289, 290, 291, 292,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 871--872
+Underfull \hbox (badness 10000) in paragraph at lines 880--881
 [] \OT1/cmtt/m/n/10 F266 | F284 => !F245 & !F246 & !F247 &
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 871--872
+Underfull \hbox (badness 10000) in paragraph at lines 880--881
 \OT1/cmtt/m/n/10 !F250 & !F251 & !F252 & !F253 & !F254 & !F255
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 871--872
+Underfull \hbox (badness 10000) in paragraph at lines 880--881
 \OT1/cmtt/m/n/10 & !F256 & !F267 & !F268 & !F269 & !F270 &
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 871--872
+Underfull \hbox (badness 10000) in paragraph at lines 880--881
 \OT1/cmtt/m/n/10 !F271 & !F272 & !F273 & !F274 & !F275 & !F276
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 871--872
+Underfull \hbox (badness 10000) in paragraph at lines 880--881
 \OT1/cmtt/m/n/10 & !F277 & !F278 & !F279 & !F280 & !F281 &
  []
 
-[9]
+[10]
 
 Package natbib Warning: There were undefined citations.
 
-[10] (./bmw.aux) ) 
+[11] (./bmw.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
- 19986 strings out of 478994
- 362035 string characters out of 5858184
+ 19993 strings out of 478994
+ 362240 string characters out of 5858184
  783230 words of memory out of 5000000
- 37105 multiletter control sequences out of 15000+600000
+ 37111 multiletter control sequences out of 15000+600000
  414277 words of font info for 70 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  102i,23n,131p,1421b,626s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/cm-super/
-cm-super-ts1.enc}</usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmbx10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmbx12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmbx9.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmex10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cme
-xtra/cmex9.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmmi10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmmi5.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmmi6.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-mi7.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
-9.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.
-pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb
-></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></
-usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr
-/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/lo
-cal/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/loc
-al/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local
-/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/t
-exlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/tex
-live/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texl
-ive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti7.pfb></usr/local/texliv
-e/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/
-2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2
-021/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/local/texlive/202
-1/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive
-/2021/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on bmw.pdf (10 pages, 921619 bytes).
+{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
+}</usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb>
+</usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><
+/usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></u
+sr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></us
+r/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb><
+/usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></
+usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></us
+r/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/
+local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/lo
+cal/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/loca
+l/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/
+texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/tex
+live/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texliv
+e/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2
+021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2021
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2021/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2021/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2021/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2021/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2021/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmti7.pfb></usr/local/texlive/2021/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2021/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2021/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmtt8.pfb></usr/local/texlive/2021/texmf-dist/fon
+ts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2021/texmf-dist
+/fonts/type1/public/cm-super/sfrm1000.pfb>
+Output written on bmw.pdf (11 pages, 935989 bytes).
 PDF statistics:
- 5413 PDF objects out of 6186 (max. 8388607)
- 3523 compressed objects within 36 object streams
+ 5464 PDF objects out of 6186 (max. 8388607)
+ 3531 compressed objects within 36 object streams
  0 named destinations out of 1000 (max. 500000)
- 134 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 139 words of extra memory for PDF output out of 10000 (max. 10000000)
 
