@@ -10,6 +10,7 @@
 \usepackage{xcolor}
 \usepackage{todonotes}
 \usepackage{qcircuit}
+\usepackage{subcaption}
 
 \newcommand{\total}{\mathrm{d}}
 \newcommand{\ud}{\mathrm{d}}
@@ -47,7 +48,7 @@ preserving gate fabric circuits to solve a key part of such a hybrid solution.
 
 \maketitle
 
-\section{Results}
+\section{Phase 1 Results}
 
 The problem statements variously ask for optimization of the constituents of a
 set or ``constellation'' of $n_{\mathrm{C}}$ test vehicles, with each test
@@ -99,7 +100,7 @@ hours.}''
 
 \begin{figure*}[ht]
 \begin{center}
-\includegraphics[width=4in]{figures/solution.pdf}
+\includegraphics[width=4in]{figures/phase1/solution.pdf}
 \caption{Characteristics of QC Ware solutions to the ``optimizing the production
 of test vehicles'' BMW quantum computing challenge problem. (A) Solutions
 to the MAX-SAT, and by corollary, SAT variants of problem variants (2) and (1),
@@ -779,14 +780,53 @@ preserving gates to address the MAX-COVER problem needed for our hybrid
 quantum/classical solution to the geometrically frustrated test vehicle
 production MAX-SAT problem. This is the basis of our research proposal to BMW.
 
-\bibliographystyle{unsrturl}
-\bibliography{refs.bib}
+\section{Phase 2 Results}
+
+\begin{figure*}
+  \centering
+  \begin{subfigure}[b]{.475\textwidth}
+    \centering
+    % include first image
+    \includegraphics[width=\textwidth]{figures/phase2/2-prod-hamming.pdf}  
+    \caption{Phase 1 constellation Hamming weight.}
+    \label{fig:sub-first}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{.475\textwidth}
+    \centering
+    % include second image
+    \includegraphics[width=\textwidth]{figures/phase2/2p-prod-hamming.pdf}  
+    \caption{Phase 2 Hamming-weight constrained constellation Hamming weight.}
+    \label{fig:sub-second}
+  \end{subfigure}
+  \vskip\baselineskip
+  \begin{subfigure}[b]{.475\textwidth}
+    \centering
+    % include third image
+    \includegraphics[width=\textwidth]{figures/phase2/2-prod-rules.pdf}  
+    \caption{Phase 1 constellation test rules satisfied.}
+    \label{fig:sub-third}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{.475\textwidth}
+    \centering
+    % include fourth image
+    \includegraphics[width=\textwidth]{figures/phase2/2p-prod-rules.pdf}  
+    \caption{Phase 2 Hamming-weight constrained constellation test rules satisfied.}
+    \label{fig:sub-fourth}
+  \end{subfigure}
+  \caption{Comparison of the results from Phase 1 and Phase 2. Plots (a) and (b) show the
+           Hamming weight of each vehicle in the constellation. Plots (c) and (d) show the
+           number of test rules satisfied per vehicle in the constellation.}
+  \label{fig:fig}
+\end{figure*}
+
 
 \appendix
 \newpage
 \clearpage
 
-\section{Details of Problem Refinement and Solution Validation}
+\section{Phase 1: Details of Problem Refinement and Solution Validation}
 
 \subsection{Feature Groups Collision Issue}
 
@@ -897,5 +937,7 @@ for that specific vehicle are in order of ranking, the test set satisfies the te
 group rank rules. Finally, each test requires a certain number of test vehicles.
 For each test, we find and count all occurrences of that specific test and compare
 it to the number required for that test. 
+
+\section{Phase 2: . . .}
 
 \end{document}
