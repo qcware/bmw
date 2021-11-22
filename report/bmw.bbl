@@ -1,24 +1,15 @@
-\begin{thebibliography}{1}
-
-\bibitem{cook2020quantum}
-Jeremy Cook, Stephan Eidenbenz, and Andreas B{\"a}rtschi.
-\newblock The quantum alternating operator ansatz on maximum k-vertex cover.
-\newblock In {\em 2020 IEEE International Conference on Quantum Computing and
-  Engineering (QCE)}, pages 83--92. IEEE, 2020\\.
-\newblock URL: \url{https://arxiv.org/pdf/1910.13483.pdf}.
-
-\bibitem{larose2021mixer}
-Ryan LaRose, Eleanor Rieffel, and Davide Venturelli.
-\newblock Mixer-phaser ansatze for quantum optimization with hard constraints.
-\newblock {\em arXiv preprint arXiv:2107.06651}, 2021.
-\newblock URL: \url{https://arxiv.org/pdf/2107.06651.pdf}.
-
-\bibitem{anselmetti2021local}
-Gian-Luca~R Anselmetti, David Wierichs, Christian Gogolin, and Robert~M
-  Parrish.
-\newblock Local, expressive, quantum-number-preserving vqe ansatze for
-  fermionic systems.
-\newblock {\em arXiv preprint arXiv:2104.05695}, 2021.
-\newblock URL: \url{https://arxiv.org/pdf/2104.05695.pdf}.
+\begin{thebibliography}{0}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+\expandafter\ifx\csname bibnamefont\endcsname\relax
+  \def\bibnamefont#1{#1}\fi
+\expandafter\ifx\csname bibfnamefont\endcsname\relax
+  \def\bibfnamefont#1{#1}\fi
+\expandafter\ifx\csname citenamefont\endcsname\relax
+  \def\citenamefont#1{#1}\fi
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\providecommand{\bibinfo}[2]{#2}
+\providecommand{\eprint}[2][]{\url{#2}}
 
 \end{thebibliography}

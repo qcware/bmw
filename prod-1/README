@@ -1,3 +1,5 @@
 1-guess - generates a pool of valid guesses for all 644 tests
 2-prod - uses heuristic to solve MaxSat for ncar from 1 to 70
+2p-prod - Hamming-weight constrained MaxSat (Phase 2)
 3-sched - uses heuristic to schedule ncar 1 to 60 from MAX-SAT constellation
+6-reduce - post-factor feature reduction of constellation produced in 2-prod (Phase 2)

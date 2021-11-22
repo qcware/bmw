@@ -780,32 +780,61 @@ preserving gates to address the MAX-COVER problem needed for our hybrid
 quantum/classical solution to the geometrically frustrated test vehicle
 production MAX-SAT problem. This is the basis of our research proposal to BMW.
 
+\clearpage
+
 \section{Phase 2}
 
-\subsection{Post-facto feature reduction}
+Following Phase 1 of the BMW Quantum Challenge, we proposed and tested three extensions
+of our proposal: 1) reduce the cost of test vehicles by two-step feature reduction,
+2) build a test vehicle constellation with built-in Hamming-weight constraint, and 
+3) develop a quantum simulator for a Hamming-weight-preserving QNP fabric, the results
+of which are described below.
 
-\begin{figure*}[ht]
+\subsection{Post-facto Feature Reduction}
+
+The test vehicles generated in Phase 1 had large Hamming-weights and represented
+complex vehicle builds. In order to reduce the test vehicle cost, the constellation
+of test vehicles reported in Phase 1 was used as a starting point for feature reduction. 
+{\color{red} [target for Hamming weight.]}
+A plot of the number of test rules that each vehicle complys with before and after feature
+reduction is shown in Fig. \ref{fig:6-reduce}. While the test vehicle cost was reduced
+by feature selection, all vehicles in the constellation still satisfy a high number of
+test rule constraints. 
+
+\begin{figure*}
 \begin{center}
-\includegraphics[width=4in]{figures/phase2/6-reduce-rules.pdf}
-\caption{Result of reducing features of constellation generated in Phase 1.
+\includegraphics[width=0.5\textwidth]{figures/phase2/6-reduce-rules.pdf}
+\caption{Result of test vehicle constellation features  reduction.
          Blue indicates the number of test rules satisfied with the initial constellation
-         generated in Phase 1 whereas red represents the results of Phase 2 reduction of
-         feature set from the initial constellation from Phase 1.}
+         generated in Phase 1 whereas red represents post-facto feature reduction in Phase 2
+         from the initial constellation from Phase 1.}
 \label{fig:6-reduce}
 \end{center}
 \end{figure*}
 
-\subsection{Feature number constrained MAX-SAT}
+\subsection{Hamming-Weight Constrained MAX-SAT}
+The test vehicle cost or number of features can be constrained by imposing a restriction
+on the number of allowed active features. 
+Test vehicles were restricted to have at most 30 active features during optimization
+of the test vehicle constellation. MAX-SAT results for Hamming-weight constrained
+optimization are qualitatively similar to those from Phase 1 (Fig. \ref{fig:solution2}).
+The constellation saturates at 62 test vehicles (recall the SAT bound is at 60 vehicles).
 
-\begin{figure*}[ht]
+\begin{figure*}
 \begin{center}
-\includegraphics[width=4in]{figures/phase2/2p-score.pdf}
+\includegraphics[width=0.5\textwidth]{figures/phase2/2p-score.pdf}
 \caption{Comparison of the results from Phase 1 and Phase 2 MAX-SAT. Phase 1 (blue) was
-         carried out without feature restriction and Phase 2 (red) restricted the Hamming
-         weight of each vehicle.}
+         carried out without feature restriction and Phase 2 (red) was carried out with
+         restriction of the Hamming weight of each vehicle.}
 \label{fig:solution2}
 \end{center}
 \end{figure*}
+
+A comparison of the vehicle feature Hamming weight and number of test rules met for
+Phase 1 and Phase 2 is depicted in Fig. \ref{fig:fig}. Remarkably, when the optimization
+is performed with a constraint on the number of active features that reduces the
+Hamming weight by nearly half, the number of test rules met by the constellation exhibit
+a minimal reduction (Figs. \ref{fig:sub-third} and \ref{fig:sub-fourth}). 
 
 \begin{figure*}
   \centering
@@ -821,7 +850,7 @@ production MAX-SAT problem. This is the basis of our research proposal to BMW.
     \centering
     % include second image
     \includegraphics[width=\textwidth]{figures/phase2/2p-prod-hamming.pdf}  
-    \caption{Phase 2 Hamming-weight constrained constellation Hamming weight.}
+    \caption{Phase 2 constrained constellation Hamming weight.}
     \label{fig:sub-second}
   \end{subfigure}
   \vskip\baselineskip
@@ -837,20 +866,33 @@ production MAX-SAT problem. This is the basis of our research proposal to BMW.
     \centering
     % include fourth image
     \includegraphics[width=\textwidth]{figures/phase2/2p-prod-rules.pdf}  
-    \caption{Phase 2 Hamming-weight constrained constellation test rules satisfied.}
+    \caption{Phase 2 constrained constellation test rules satisfied.}
     \label{fig:sub-fourth}
   \end{subfigure}
-  \caption{Comparison of the results from Phase 1 and Phase 2. Plots (a) and (b) show the
+  \caption{Comparison of the results from unconstrained Phase 1 and Hamming-weight constrained            Phase 2 test vehicle constellation optimization. Plots (a) and (b) show the
            Hamming weight of each vehicle in the constellation. Plots (c) and (d) show the
            number of test rules satisfied per vehicle in the constellation.}
   \label{fig:fig}
 \end{figure*}
 
+\subsection{Hamming-Weight-Preserving QNP Fabric Simulator}
+The Hamming-weight constrained constellation described in the previous section
+was used to solve the MAX-COVER problem.
+
 \subsection{Comment on Scheduling}
 
-\begin{figure*}[ht]
+While scheduling was not the focus of our Phase 2 work, we note an observation from
+scheduling of the Phase 1 constellation. As shown in Fig. \ref{fig:freq}, each test
+vechicle is scheduled for multiple tests without restriction. Logistically, the 
+number of tests performed per vehicle is a parameter than should be accounted for. 
+A limit can be placed on the number of tests performed per vehicle to enforce
+diversity in the scheduled vehicles, or alternatively, the parameter can be set
+to ensure that a given vehicle meets a certain number of tests in order to be put on
+the schedule. 
+
+\begin{figure*}
 \begin{center}
-\includegraphics[width=4in]{figures/phase2/3-sched-frequency.pdf}
+\includegraphics[width=0.5\textwidth]{figures/phase2/3-sched-frequency.pdf}
 \caption{Number of times each vehicle was scheduled for a test in the Phase 1 scheduling.}
 \label{fig:freq}
 \end{center}
