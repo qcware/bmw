@@ -1,0 +1,13 @@
+post-facto-feature-reduction-solution.npz - Two-step reduction of features
+    from constellation in ../Phase1/max-sat-solution.npz
+    'constellation' is (60, 469)-shaped boolean array of 60 cars and 469 features.
+    'constellation_type_indices' is (60,)-shaped array of car type to index
+    the rows of the 'constellation' array.
+
+hamming-weight-constrained-max-sat_solution.npz - Feature restricted solution
+    to the MAX-SAT problem. Features restricted to have at most 30 active features.
+    'constellation' is (70, 469)- shaped boolean array of car and features.
+    The first 62 cars saturate the MAX-SAT problem.
+    'constellation_type_indices' is (70,)-shaped array indexing the car
+    type of the 'constellation' array rows. 
+
