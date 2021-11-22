@@ -10,8 +10,8 @@ if __name__ == '__main__':
     bmw_path = '/home/ec2-user/bmw'
     problem = bmw.Problem.parse(filepath='%s/data/3-refined' % bmw_path)
 
-    M = 24
-    dat = np.load('set_24.npz')
+    M = 8
+    dat = np.load('set_8.npz')
     constellation = dat['constellation']
     constellation_type_indices = dat['constellation_type_indices']
 
@@ -35,7 +35,7 @@ if __name__ == '__main__':
         print('%11d : %30s %30s %11d %11d' % (index, bin(index)[2:], indices, len(indices), value))
 
     np.savez(
-        'hamiltonian-24.npz',
+        'hamiltonian-8.npz',
         hamiltonian=hamiltonian,
         )
 

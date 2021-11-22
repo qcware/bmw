@@ -7,30 +7,30 @@ constellation = sol['constellation']
 constellation_type_indices = sol['constellation_type_indices']
 
 
-constellation_m_12 = constellation[0:12,:]
-constellation_type_indices_m_12 = constellation_type_indices[0:12]
+constellation_m_6 = constellation[0:6,:]
+constellation_type_indices_m_6 = constellation_type_indices[0:6]
 
-constellation_m_14 = constellation[0:14,:]
-constellation_type_indices_m_14 = constellation_type_indices[0:14]
+constellation_m_8 = constellation[0:8,:]
+constellation_type_indices_m_8 = constellation_type_indices[0:8]
 
-constellation_m_24 = constellation[0:24,:]
-constellation_type_indices_m_24 = constellation_type_indices[0:24]
+constellation_m_16 = constellation[0:16,:]
+constellation_type_indices_m_16 = constellation_type_indices[0:16]
 
 np.savez(
-    'set_12.npz',
-    constellation=constellation_m_12,
-    constellation_type_indices=constellation_type_indices_m_12,
+    'set_6.npz',
+    constellation=constellation_m_6,
+    constellation_type_indices=constellation_type_indices_m_6,
     )
 
 np.savez(
-    'set_14.npz',
-    constellation=constellation_m_14,
-    constellation_type_indices=constellation_type_indices_m_14,
+    'set_8.npz',
+    constellation=constellation_m_8,
+    constellation_type_indices=constellation_type_indices_m_8,
     )
 
 np.savez(
-    'set_24.npz',
-    constellation=constellation_m_24,
-    constellation_type_indices=constellation_type_indices_m_24,
+    'set_16.npz',
+    constellation=constellation_m_16,
+    constellation_type_indices=constellation_type_indices_m_16,
     )
 
