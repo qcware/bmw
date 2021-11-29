@@ -36,8 +36,8 @@ plt.clf()
 plt.bar(x,y,color='r')
 plt.axis([-1, 62, 50, 250])
 plt.yticks(np.arange(0, 250+1, 50))
-plt.xlabel('Test Car')
-plt.ylabel('Number of Test Rules Satisfied')
+plt.xlabel('Test Vehicle')
+plt.ylabel('Number of Test Rules Satisfied Per Test Vehicle')
 plt.savefig('rules-6.pdf',bbox_inches='tight')
 
 
