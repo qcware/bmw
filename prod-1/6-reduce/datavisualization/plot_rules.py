@@ -43,8 +43,8 @@ plt.bar(x,y2,color='r',label='Phase 2')
 plt.axis([-1, 60, 50, 250])
 plt.yticks(np.arange(0, 250+1, 50))
 plt.legend(loc=1)
-plt.xlabel('Test Car')
-plt.ylabel('Number of Test Rules Satisfied')
-plt.savefig('rules.pdf',bbox_inches='tight')
+plt.xlabel('Test Vehicle')
+plt.ylabel('Number of Test Rules Satisfied Per Test Vehicle')
+plt.savefig('rules_2.pdf',bbox_inches='tight')
 
 

@@ -1,4 +1,4 @@
-\begin{thebibliography}{0}
+\begin{thebibliography}{3}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \expandafter\ifx\csname bibnamefont\endcsname\relax
   \def\bibnamefont#1{#1}\fi
@@ -11,5 +11,33 @@
 \expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
 \providecommand{\bibinfo}[2]{#2}
 \providecommand{\eprint}[2][]{\url{#2}}
+
+\bibitem[{\citenamefont{Cook et~al.}(2020\\)\citenamefont{Cook, Eidenbenz, and
+  B{\"a}rtschi}}]{cook2020quantum}
+\bibinfo{author}{\bibfnamefont{J.}~\bibnamefont{Cook}},
+  \bibinfo{author}{\bibfnamefont{S.}~\bibnamefont{Eidenbenz}},
+  \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{A.}~\bibnamefont{B{\"a}rtschi}}, in
+  \emph{\bibinfo{booktitle}{2020 IEEE International Conference on Quantum
+  Computing and Engineering (QCE)}} (\bibinfo{organization}{IEEE},
+  \bibinfo{year}{2020\\}), pp. \bibinfo{pages}{83--92},
+  \urlprefix\url{https://arxiv.org/pdf/1910.13483.pdf}.
+
+\bibitem[{\citenamefont{LaRose et~al.}(2021)\citenamefont{LaRose, Rieffel, and
+  Venturelli}}]{larose2021mixer}
+\bibinfo{author}{\bibfnamefont{R.}~\bibnamefont{LaRose}},
+  \bibinfo{author}{\bibfnamefont{E.}~\bibnamefont{Rieffel}}, \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{D.}~\bibnamefont{Venturelli}},
+  \bibinfo{journal}{arXiv preprint arXiv:2107.06651}  (\bibinfo{year}{2021}),
+  \urlprefix\url{https://arxiv.org/pdf/2107.06651.pdf}.
+
+\bibitem[{\citenamefont{Anselmetti et~al.}(2021)\citenamefont{Anselmetti,
+  Wierichs, Gogolin, and Parrish}}]{anselmetti2021local}
+\bibinfo{author}{\bibfnamefont{G.-L.~R.} \bibnamefont{Anselmetti}},
+  \bibinfo{author}{\bibfnamefont{D.}~\bibnamefont{Wierichs}},
+  \bibinfo{author}{\bibfnamefont{C.}~\bibnamefont{Gogolin}}, \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{R.~M.} \bibnamefont{Parrish}},
+  \bibinfo{journal}{arXiv preprint arXiv:2104.05695}  (\bibinfo{year}{2021}),
+  \urlprefix\url{https://arxiv.org/pdf/2104.05695.pdf}.
 
 \end{thebibliography}
