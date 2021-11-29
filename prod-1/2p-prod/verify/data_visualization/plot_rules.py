@@ -33,9 +33,10 @@ for t2, test_index in enumerate(test_indices):
 
 plt.rcParams.update({'font.size': 8})
 plt.clf()
-plt.bar(x,y,color='r')
+plt.bar(x,y,color='r',label='Phase 2')
 plt.axis([-1, 62, 50, 250])
 plt.yticks(np.arange(0, 250+1, 50))
+plt.legend(loc=1)
 plt.xlabel('Test Vehicle')
 plt.ylabel('Number of Test Rules Satisfied Per Test Vehicle')
 plt.savefig('rules-6.pdf',bbox_inches='tight')
