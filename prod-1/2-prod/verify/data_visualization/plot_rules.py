@@ -2,9 +2,9 @@ import bmw
 import numpy as np
 import matplotlib.pyplot as plt 
 
-problem = bmw.Problem.parse(filepath='../../../data/3-refined')
+problem = bmw.Problem.parse(filepath='../../../../data/3-refined')
 
-dat = np.load('../test-0.npz')
+dat = np.load('../../test-0.npz')
 constellation = dat['constellation']
 constellation_type_indices = dat['constellation_type_indices']
 
@@ -33,11 +33,12 @@ for t2, test_index in enumerate(test_indices):
 
 plt.rcParams.update({'font.size': 8})
 plt.clf()
-plt.bar(x,y,color='r')
+plt.bar(x,y,color='b',label='Phase 1')
 plt.axis([-1, 60, 50, 250])
 plt.yticks(np.arange(0, 250+1, 50))
-plt.xlabel('Test Car')
-plt.ylabel('Number of Test Rules Satisfied')
+plt.legend(loc=1)
+plt.xlabel('Test Vehicle')
+plt.ylabel('Number of Test Rules Satisfied Per Test Vehicle')
 plt.savefig('rules.pdf',bbox_inches='tight')
 
 
